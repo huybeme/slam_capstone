@@ -1,0 +1,25 @@
+running develop
+running egg_info
+creating capstone_pkg.egg-info
+writing capstone_pkg.egg-info/PKG-INFO
+writing dependency_links to capstone_pkg.egg-info/dependency_links.txt
+writing entry points to capstone_pkg.egg-info/entry_points.txt
+writing requirements to capstone_pkg.egg-info/requires.txt
+writing top-level names to capstone_pkg.egg-info/top_level.txt
+writing manifest file 'capstone_pkg.egg-info/SOURCES.txt'
+reading manifest file 'capstone_pkg.egg-info/SOURCES.txt'
+writing manifest file 'capstone_pkg.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/site.py
+Creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone-pkg.egg-link (link to .)
+Installing basic_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+Installing lidar_data script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+Installing stop_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+
+Installed /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg
+running install_data
+creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index
+creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index/resource_index
+creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index/resource_index/packages
+copying resource/capstone_pkg -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index/resource_index/packages
+copying package.xml -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/capstone_pkg

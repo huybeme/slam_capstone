@@ -1,0 +1,47 @@
+[0.633s] Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg': PYTHONPATH=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg --uninstall --editable --build-directory /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build
+[0.861s] running develop
+[0.965s] Removing /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone-pkg.egg-link (link to .)
+[0.984s] Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg' returned '0': PYTHONPATH=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg --uninstall --editable --build-directory /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build
+[0.987s] Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_pkg': PYTHONPATH=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/capstone_pkg build --build-base /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build install --prefix /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg --record /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/install.log --single-version-externally-managed
+[1.177s] running egg_info
+[1.178s] writing ../../build/capstone_pkg/capstone_pkg.egg-info/PKG-INFO
+[1.178s] writing dependency_links to ../../build/capstone_pkg/capstone_pkg.egg-info/dependency_links.txt
+[1.178s] writing entry points to ../../build/capstone_pkg/capstone_pkg.egg-info/entry_points.txt
+[1.178s] writing requirements to ../../build/capstone_pkg/capstone_pkg.egg-info/requires.txt
+[1.178s] writing top-level names to ../../build/capstone_pkg/capstone_pkg.egg-info/top_level.txt
+[1.205s] reading manifest file '../../build/capstone_pkg/capstone_pkg.egg-info/SOURCES.txt'
+[1.206s] writing manifest file '../../build/capstone_pkg/capstone_pkg.egg-info/SOURCES.txt'
+[1.206s] running build
+[1.206s] running build_py
+[1.206s] creating /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build
+[1.206s] creating /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib
+[1.206s] creating /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+[1.207s] copying capstone_pkg/basic_movement.py -> /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+[1.207s] copying capstone_pkg/lidar_data.py -> /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+[1.207s] copying capstone_pkg/stop_movement.py -> /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+[1.207s] copying capstone_pkg/tb3_status.py -> /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+[1.207s] copying capstone_pkg/__init__.py -> /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+[1.207s] running install
+[1.208s] running install_lib
+[1.208s] creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+[1.209s] copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/basic_movement.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+[1.209s] copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/lidar_data.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+[1.209s] copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/stop_movement.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+[1.209s] copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/tb3_status.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+[1.209s] copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/__init__.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+[1.209s] byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/basic_movement.py to basic_movement.cpython-38.pyc
+[1.211s] byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/lidar_data.py to lidar_data.cpython-38.pyc
+[1.211s] byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/stop_movement.py to stop_movement.cpython-38.pyc
+[1.211s] byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/tb3_status.py to tb3_status.cpython-38.pyc
+[1.212s] byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/__init__.py to __init__.cpython-38.pyc
+[1.212s] running install_data
+[1.212s] copying package.xml -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/capstone_pkg
+[1.212s] running install_egg_info
+[1.214s] Copying ../../build/capstone_pkg/capstone_pkg.egg-info to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg-0.0.0-py3.8.egg-info
+[1.215s] running install_scripts
+[1.229s] Installing basic_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+[1.229s] Installing lidar_data script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+[1.229s] Installing stop_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+[1.229s] Installing tb3_status script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+[1.230s] writing list of installed files to '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/install.log'
+[1.246s] Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_pkg' returned '0': PYTHONPATH=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/capstone_pkg build --build-base /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build install --prefix /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg --record /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/install.log --single-version-externally-managed

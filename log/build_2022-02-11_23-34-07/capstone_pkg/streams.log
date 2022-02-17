@@ -1,0 +1,27 @@
+[0.535s] Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg': PYTHONPATH=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg --editable --build-directory /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build --no-deps install_data --install-dir /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg
+[0.738s] running develop
+[0.840s] running egg_info
+[0.840s] creating capstone_pkg.egg-info
+[0.841s] writing capstone_pkg.egg-info/PKG-INFO
+[0.841s] writing dependency_links to capstone_pkg.egg-info/dependency_links.txt
+[0.841s] writing entry points to capstone_pkg.egg-info/entry_points.txt
+[0.841s] writing requirements to capstone_pkg.egg-info/requires.txt
+[0.841s] writing top-level names to capstone_pkg.egg-info/top_level.txt
+[0.842s] writing manifest file 'capstone_pkg.egg-info/SOURCES.txt'
+[0.866s] reading manifest file 'capstone_pkg.egg-info/SOURCES.txt'
+[0.867s] writing manifest file 'capstone_pkg.egg-info/SOURCES.txt'
+[0.894s] running build_ext
+[0.894s] Creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/site.py
+[0.895s] Creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone-pkg.egg-link (link to .)
+[0.896s] Installing basic_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+[0.896s] Installing lidar_data script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+[0.896s] Installing stop_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+[0.896s] 
+[0.897s] Installed /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg
+[0.897s] running install_data
+[0.897s] creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index
+[0.897s] creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index/resource_index
+[0.897s] creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index/resource_index/packages
+[0.897s] copying resource/capstone_pkg -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/ament_index/resource_index/packages
+[0.900s] copying package.xml -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/capstone_pkg
+[0.923s] Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg' returned '0': PYTHONPATH=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg --editable --build-directory /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build --no-deps install_data --install-dir /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg
