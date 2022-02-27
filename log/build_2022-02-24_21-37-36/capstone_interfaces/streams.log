@@ -1,0 +1,20 @@
+[0.011s] Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/opt/ros/foxy /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_interfaces -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_interfaces
+[0.025s] -- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.051s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.052s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.197s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.202s] -- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)
+[0.207s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.210s] -- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[0.330s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.357s] CMake Error at /opt/ros/foxy/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:93 (message):
+[0.357s]   rosidl_generate_interfaces() the passed file 'msg/tb3Status.msg' doesn't
+[0.357s]   exist relative to the CMAKE_CURRENT_SOURCE_DIR
+[0.357s]   '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_interfaces'
+[0.357s] Call Stack (most recent call first):
+[0.357s]   CMakeLists.txt:21 (rosidl_generate_interfaces)
+[0.358s] 
+[0.358s] 
+[0.358s] -- Configuring incomplete, errors occurred!
+[0.358s] See also "/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_interfaces/CMakeFiles/CMakeOutput.log".
+[0.363s] Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_interfaces' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/opt/ros/foxy /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_interfaces -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_interfaces

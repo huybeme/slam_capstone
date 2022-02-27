@@ -1,0 +1,8 @@
+CMake Error at /opt/ros/foxy/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:93 (message):
+  rosidl_generate_interfaces() the passed file 'msg/tb3Status.msg' doesn't
+  exist relative to the CMAKE_CURRENT_SOURCE_DIR
+  '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_interfaces'
+Call Stack (most recent call first):
+  CMakeLists.txt:21 (rosidl_generate_interfaces)
+
+

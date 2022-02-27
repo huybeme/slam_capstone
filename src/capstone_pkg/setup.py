@@ -22,8 +22,8 @@ setup(
         'console_scripts': [
             "basic_movement = capstone_pkg.basic_movement:main",
             "stop_movement = capstone_pkg.stop_movement:main",
-            "lidar_data = capstone_pkg.lidar_data:main",
-            "tb3_status = capstone_pkg.tb3_status:main"
+            "tb3_status = capstone_pkg.tb3_status:main",
+            "circle_around = capstone_pkg.circle_around:main",
         ],
     },
 )

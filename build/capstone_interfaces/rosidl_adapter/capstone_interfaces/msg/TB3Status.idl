@@ -1,0 +1,15 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from capstone_interfaces/msg/TB3Status.msg
+// generated code does not contain a copyright notice
+
+
+module capstone_interfaces {
+  module msg {
+    typedef float float__8[8];
+    @verbatim (language="comment", text=
+      " NW, N, NE, E, SE, S, SW, W - order of directions for array")
+    struct TB3Status {
+      float__8 lidar_data;
+    };
+  };
+};

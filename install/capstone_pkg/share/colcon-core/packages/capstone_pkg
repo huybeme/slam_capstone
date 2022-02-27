@@ -1,1 +1,1 @@
-examples_interface:geometry_msgs:rclpy:sensor_msgs
+capstone_interfaces:examples_interface:geometry_msgs:nav_msgs:rclpy:sensor_msgs

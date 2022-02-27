@@ -1,0 +1,39 @@
+running develop
+Removing /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone-pkg.egg-link (link to .)
+running egg_info
+writing ../../build/capstone_pkg/capstone_pkg.egg-info/PKG-INFO
+writing dependency_links to ../../build/capstone_pkg/capstone_pkg.egg-info/dependency_links.txt
+writing entry points to ../../build/capstone_pkg/capstone_pkg.egg-info/entry_points.txt
+writing requirements to ../../build/capstone_pkg/capstone_pkg.egg-info/requires.txt
+writing top-level names to ../../build/capstone_pkg/capstone_pkg.egg-info/top_level.txt
+reading manifest file '../../build/capstone_pkg/capstone_pkg.egg-info/SOURCES.txt'
+writing manifest file '../../build/capstone_pkg/capstone_pkg.egg-info/SOURCES.txt'
+running build
+running build_py
+copying capstone_pkg/circle_around.py -> /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+copying capstone_pkg/tb3_status.py -> /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg
+running install
+running install_lib
+creating /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/basic_movement.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/lidar_data.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/circle_around.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/stop_movement.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/tb3_status.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+copying /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/build/lib/capstone_pkg/__init__.py -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg
+byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/basic_movement.py to basic_movement.cpython-38.pyc
+byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/lidar_data.py to lidar_data.cpython-38.pyc
+byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/circle_around.py to circle_around.cpython-38.pyc
+byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/stop_movement.py to stop_movement.cpython-38.pyc
+byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/tb3_status.py to tb3_status.cpython-38.pyc
+byte-compiling /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg/__init__.py to __init__.cpython-38.pyc
+running install_data
+copying package.xml -> /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/share/capstone_pkg
+running install_egg_info
+Copying ../../build/capstone_pkg/capstone_pkg.egg-info to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/python3.8/site-packages/capstone_pkg-0.0.0-py3.8.egg-info
+running install_scripts
+Installing basic_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+Installing circle_around script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+Installing stop_movement script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+Installing tb3_status script to /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg/lib/capstone_pkg
+writing list of installed files to '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg/install.log'

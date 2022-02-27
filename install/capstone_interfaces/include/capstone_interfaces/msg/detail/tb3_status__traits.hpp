@@ -1,0 +1,1 @@
+/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_interfaces/rosidl_generator_cpp/capstone_interfaces/msg/detail/tb3_status__traits.hpp
