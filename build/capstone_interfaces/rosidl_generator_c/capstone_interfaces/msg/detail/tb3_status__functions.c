@@ -16,6 +16,8 @@ capstone_interfaces__msg__TB3Status__init(capstone_interfaces__msg__TB3Status * 
     return false;
   }
   // lidar_data
+  // hit_wall
+  msg->hit_wall = false;
   return true;
 }
 
@@ -26,6 +28,7 @@ capstone_interfaces__msg__TB3Status__fini(capstone_interfaces__msg__TB3Status * 
     return;
   }
   // lidar_data
+  // hit_wall
 }
 
 capstone_interfaces__msg__TB3Status *

@@ -7,9 +7,12 @@ module capstone_interfaces {
   module msg {
     typedef float float__8[8];
     @verbatim (language="comment", text=
-      " NW, N, NE, E, SE, S, SW, W - order of directions for array")
+      " NW, N, NE, W, E, SW, S, SE - order of directions for array")
     struct TB3Status {
       float__8 lidar_data;
+
+      @default (value=FALSE)
+      boolean hit_wall;
     };
   };
 };

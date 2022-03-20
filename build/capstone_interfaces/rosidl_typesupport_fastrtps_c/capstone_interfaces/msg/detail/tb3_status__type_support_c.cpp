@@ -56,6 +56,11 @@ static bool _TB3Status__cdr_serialize(
     cdr.serializeArray(array_ptr, size);
   }
 
+  // Field name: hit_wall
+  {
+    cdr << (ros_message->hit_wall ? true : false);
+  }
+
   return true;
 }
 
@@ -73,6 +78,13 @@ static bool _TB3Status__cdr_deserialize(
     size_t size = 8;
     auto array_ptr = ros_message->lidar_data;
     cdr.deserializeArray(array_ptr, size);
+  }
+
+  // Field name: hit_wall
+  {
+    uint8_t tmp;
+    cdr >> tmp;
+    ros_message->hit_wall = tmp ? true : false;
   }
 
   return true;
@@ -99,6 +111,12 @@ size_t get_serialized_size_capstone_interfaces__msg__TB3Status(
     (void)array_ptr;
     size_t item_size = sizeof(array_ptr[0]);
     current_alignment += array_size * item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
+  // field.name hit_wall
+  {
+    size_t item_size = sizeof(ros_message->hit_wall);
+    current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
@@ -131,6 +149,12 @@ size_t max_serialized_size_capstone_interfaces__msg__TB3Status(
 
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+  }
+  // member: hit_wall
+  {
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   return current_alignment - initial_alignment;

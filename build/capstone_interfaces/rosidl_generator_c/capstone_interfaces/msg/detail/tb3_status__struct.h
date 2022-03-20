@@ -21,6 +21,7 @@ extern "C"
 typedef struct capstone_interfaces__msg__TB3Status
 {
   float lidar_data[8];
+  bool hit_wall;
 } capstone_interfaces__msg__TB3Status;
 
 // Struct for a sequence of capstone_interfaces__msg__TB3Status.

@@ -1,5 +1,5 @@
 import rclpy
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import qos_profile_sensor_data # need this buffer for lidar sensor
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import BatteryState
@@ -13,12 +13,12 @@ class tb3_status_node(Node):
     def __init__(self):
         super().__init__("tb3_status")
 
-        self.lidar_sub = self.create_subscription(
-            LaserScan, "scan", self.callback_lidar, qos_profile_sensor_data
-        )
-
         self.battery_percent_sub = self.create_subscription(
             BatteryState, "battery_state", self.callback_battery, 10
+        )
+
+        self.lidar_sub = self.create_subscription(
+            LaserScan, "scan", self.callback_lidar, qos_profile_sensor_data
         )
 
         self.lidar_pub = self.create_publisher(
@@ -28,7 +28,7 @@ class tb3_status_node(Node):
         print("tb3_status_node has been started")
 
     def callback_battery(self, msg):
-        if msg.percentage < 20.0:
+        if msg.percentage < 20.0 and msg.percentage > 0.1:
             print("low battery: (%): {:.2f}".format(msg.percentage))
 
     def callback_lidar(self, msg):

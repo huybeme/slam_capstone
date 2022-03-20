@@ -57,7 +57,7 @@ void * get_function__TB3Status__lidar_data(void * untyped_member, size_t index)
   return &member[index];
 }
 
-static const ::rosidl_typesupport_introspection_cpp::MessageMember TB3Status_message_member_array[1] = {
+static const ::rosidl_typesupport_introspection_cpp::MessageMember TB3Status_message_member_array[2] = {
   {
     "lidar_data",  // name
     ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT,  // type
@@ -72,13 +72,28 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember TB3Status_mes
     get_const_function__TB3Status__lidar_data,  // get_const(index) function pointer
     get_function__TB3Status__lidar_data,  // get(index) function pointer
     nullptr  // resize(index) function pointer
+  },
+  {
+    "hit_wall",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BOOLEAN,  // type
+    0,  // upper bound of string
+    nullptr,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(capstone_interfaces::msg::TB3Status, hit_wall),  // bytes offset in struct
+    nullptr,  // default value
+    nullptr,  // size() function pointer
+    nullptr,  // get_const(index) function pointer
+    nullptr,  // get(index) function pointer
+    nullptr  // resize(index) function pointer
   }
 };
 
 static const ::rosidl_typesupport_introspection_cpp::MessageMembers TB3Status_message_members = {
   "capstone_interfaces::msg",  // message namespace
   "TB3Status",  // message name
-  1,  // number of fields
+  2,  // number of fields
   sizeof(capstone_interfaces::msg::TB3Status),
   TB3Status_message_member_array,  // message members
   TB3Status_init_function,  // function to initialize message memory (memory has to be allocated)

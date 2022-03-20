@@ -20,16 +20,32 @@ namespace msg
 namespace builder
 {
 
+class Init_TB3Status_hit_wall
+{
+public:
+  explicit Init_TB3Status_hit_wall(::capstone_interfaces::msg::TB3Status & msg)
+  : msg_(msg)
+  {}
+  ::capstone_interfaces::msg::TB3Status hit_wall(::capstone_interfaces::msg::TB3Status::_hit_wall_type arg)
+  {
+    msg_.hit_wall = std::move(arg);
+    return std::move(msg_);
+  }
+
+private:
+  ::capstone_interfaces::msg::TB3Status msg_;
+};
+
 class Init_TB3Status_lidar_data
 {
 public:
   Init_TB3Status_lidar_data()
   : msg_(::rosidl_runtime_cpp::MessageInitialization::SKIP)
   {}
-  ::capstone_interfaces::msg::TB3Status lidar_data(::capstone_interfaces::msg::TB3Status::_lidar_data_type arg)
+  Init_TB3Status_hit_wall lidar_data(::capstone_interfaces::msg::TB3Status::_lidar_data_type arg)
   {
     msg_.lidar_data = std::move(arg);
-    return std::move(msg_);
+    return Init_TB3Status_hit_wall(msg_);
   }
 
 private:

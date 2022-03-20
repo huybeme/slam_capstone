@@ -1,0 +1,2 @@
+Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup': /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup
+Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup' returned '1': /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup

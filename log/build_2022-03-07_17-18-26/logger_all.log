@@ -1,0 +1,156 @@
+[0.112s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'capstone_bringup', '--symlink-install']
+[0.113s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f377e1ca4f0>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=['capstone_bringup'], packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=8, paths=None, symlink_install=True, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f377e1ca4f0>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f377e1caa30>)
+[0.116s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.116s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.116s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.116s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.116s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.116s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.116s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/hle/Desktop/compsci/ros/slam_capstone'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extensions ['ignore', 'ignore_ament_install']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extension 'ignore_ament_install'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extensions ['colcon_pkg']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extension 'colcon_pkg'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extensions ['colcon_meta']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extension 'colcon_meta'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extensions ['ros']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_bringup) by extension 'ros'
+[0.129s] DEBUG:colcon.colcon_core.package_identification:Package 'src/capstone_bringup' with type 'ros.ament_cmake' and name 'capstone_bringup'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extension 'ignore'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extension 'ignore_ament_install'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extensions ['colcon_pkg']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extension 'colcon_pkg'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extensions ['colcon_meta']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extension 'colcon_meta'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extensions ['ros']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_interfaces) by extension 'ros'
+[0.130s] DEBUG:colcon.colcon_core.package_identification:Package 'src/capstone_interfaces' with type 'ros.ament_cmake' and name 'capstone_interfaces'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extension 'ignore'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extension 'ignore_ament_install'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extensions ['colcon_pkg']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extension 'colcon_pkg'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extensions ['colcon_meta']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extension 'colcon_meta'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extensions ['ros']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/capstone_pkg) by extension 'ros'
+[0.131s] DEBUG:colcon.colcon_core.package_identification:Package 'src/capstone_pkg' with type 'ros.ament_python' and name 'capstone_pkg'
+[0.131s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.131s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.131s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.131s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.131s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.146s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'capstone_interfaces' in 'src/capstone_interfaces'
+[0.146s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'capstone_pkg' in 'src/capstone_pkg'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'cmake_args' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'cmake_target' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[0.146s] Level 5:colcon.colcon_core.verb:set package 'capstone_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.146s] DEBUG:colcon.colcon_core.verb:Building package 'capstone_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup', 'merge_install': False, 'path': '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup', 'symlink_install': True, 'test_result_base': None}
+[0.152s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.154s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.154s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup' with build type 'ament_cmake'
+[0.154s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup'
+[0.157s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.157s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.157s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.166s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup
+[0.778s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup
+[0.779s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy /usr/bin/cmake --build /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup -- -j8 -l8
+[0.809s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy /usr/bin/cmake --build /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup -- -j8 -l8
+[0.840s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy /usr/bin/cmake --install /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup
+[0.996s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(capstone_bringup)
+[0.997s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy /usr/bin/cmake --install /home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup
+[1.000s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup' for CMake module files
+[1.001s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup' for CMake config files
+[1.001s] Level 1:colcon.colcon_core.shell:create_environment_hook('capstone_bringup', 'cmake_prefix_path')
+[1.001s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/hook/cmake_prefix_path.ps1'
+[1.005s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/hook/cmake_prefix_path.dsv'
+[1.005s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/hook/cmake_prefix_path.sh'
+[1.006s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/bin'
+[1.006s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/lib/pkgconfig/capstone_bringup.pc'
+[1.006s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/lib/python3.8/site-packages'
+[1.007s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.ps1'
+[1.008s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.dsv'
+[1.008s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.sh'
+[1.009s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.bash'
+[1.009s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.zsh'
+[1.010s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/colcon-core/packages/capstone_bringup)
+[1.030s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(capstone_bringup)
+[1.031s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup' for CMake module files
+[1.031s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup' for CMake config files
+[1.031s] Level 1:colcon.colcon_core.shell:create_environment_hook('capstone_bringup', 'cmake_prefix_path')
+[1.032s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/hook/cmake_prefix_path.ps1'
+[1.032s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/hook/cmake_prefix_path.dsv'
+[1.033s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/hook/cmake_prefix_path.sh'
+[1.033s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/bin'
+[1.033s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/lib/pkgconfig/capstone_bringup.pc'
+[1.033s] Level 1:colcon.colcon_core.environment:checking '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/lib/python3.8/site-packages'
+[1.034s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.ps1'
+[1.034s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.dsv'
+[1.035s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.sh'
+[1.035s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.bash'
+[1.035s] INFO:colcon.colcon_core.shell:Creating package script '/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/package.zsh'
+[1.036s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/colcon-core/packages/capstone_bringup)
+[1.036s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[1.036s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[1.036s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[1.037s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[1.044s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[1.044s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[1.044s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[1.061s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[1.061s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/hle/Desktop/compsci/ros/slam_capstone/install/local_setup.ps1'
+[1.062s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/hle/Desktop/compsci/ros/slam_capstone/install/_local_setup_util_ps1.py'
+[1.063s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/hle/Desktop/compsci/ros/slam_capstone/install/setup.ps1'
+[1.065s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/hle/Desktop/compsci/ros/slam_capstone/install/local_setup.sh'
+[1.066s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/hle/Desktop/compsci/ros/slam_capstone/install/_local_setup_util_sh.py'
+[1.066s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/hle/Desktop/compsci/ros/slam_capstone/install/setup.sh'
+[1.068s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/hle/Desktop/compsci/ros/slam_capstone/install/local_setup.bash'
+[1.069s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/hle/Desktop/compsci/ros/slam_capstone/install/setup.bash'
+[1.070s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/hle/Desktop/compsci/ros/slam_capstone/install/local_setup.zsh'
+[1.071s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/hle/Desktop/compsci/ros/slam_capstone/install/setup.zsh'

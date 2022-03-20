@@ -77,6 +77,15 @@ bool capstone_interfaces__msg__tb3_status__convert_from_py(PyObject * _pymsg, vo
     }
     Py_DECREF(field);
   }
+  {  // hit_wall
+    PyObject * field = PyObject_GetAttrString(_pymsg, "hit_wall");
+    if (!field) {
+      return false;
+    }
+    assert(PyBool_Check(field));
+    ros_message->hit_wall = (Py_True == field);
+    Py_DECREF(field);
+  }
 
   return true;
 }
@@ -116,6 +125,17 @@ PyObject * capstone_interfaces__msg__tb3_status__convert_to_py(void * raw_ros_me
     float * src = &(ros_message->lidar_data[0]);
     memcpy(dst, src, 8 * sizeof(float));
     Py_DECREF(field);
+  }
+  {  // hit_wall
+    PyObject * field = NULL;
+    field = PyBool_FromLong(ros_message->hit_wall ? 1 : 0);
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "hit_wall", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
   }
 
   // ownership of _pymessage is transferred to the caller

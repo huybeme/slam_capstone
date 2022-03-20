@@ -1,0 +1,12 @@
+-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+CMake Error at /opt/ros/foxy/share/ament_cmake_core/cmake/symlink_install/install.cmake:43 (_install):
+  _install does not recognize sub-command PARENT_DIRECTORY
+Call Stack (most recent call first):
+  CMakeLists.txt:24 (install)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/CMakeOutput.log".
+make: *** [Makefile:222: cmake_check_build_system] Error 1

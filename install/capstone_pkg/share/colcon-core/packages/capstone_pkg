@@ -1,1 +1,1 @@
-capstone_interfaces:examples_interface:geometry_msgs:nav_msgs:rclpy:sensor_msgs
+capstone_interfaces:cartographer:cartographer_ros_msgs:examples_interface:geometry_msgs:joint_state_publisher:joint_state_publisher_gui:nav_msgs:python-numpy:python3-scipy:rclpy:robot_state_publisher:rviz2:sensor_msgs:xacro

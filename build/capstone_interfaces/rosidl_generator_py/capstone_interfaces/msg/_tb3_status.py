@@ -49,7 +49,13 @@ class Metaclass_TB3Status(type):
         # the message class under "Data and other attributes defined here:"
         # as well as populate each message instance
         return {
+            'HIT_WALL__DEFAULT': False,
         }
+
+    @property
+    def HIT_WALL__DEFAULT(cls):
+        """Return default value for message field 'hit_wall'."""
+        return False
 
 
 class TB3Status(metaclass=Metaclass_TB3Status):
@@ -57,14 +63,17 @@ class TB3Status(metaclass=Metaclass_TB3Status):
 
     __slots__ = [
         '_lidar_data',
+        '_hit_wall',
     ]
 
     _fields_and_field_types = {
         'lidar_data': 'float[8]',
+        'hit_wall': 'boolean',
     }
 
     SLOT_TYPES = (
         rosidl_parser.definition.Array(rosidl_parser.definition.BasicType('float'), 8),  # noqa: E501
+        rosidl_parser.definition.BasicType('boolean'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
@@ -76,6 +85,8 @@ class TB3Status(metaclass=Metaclass_TB3Status):
         else:
             self.lidar_data = numpy.array(kwargs.get('lidar_data'), dtype=numpy.float32)
             assert self.lidar_data.shape == (8, )
+        self.hit_wall = kwargs.get(
+            'hit_wall', TB3Status.HIT_WALL__DEFAULT)
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -107,6 +118,8 @@ class TB3Status(metaclass=Metaclass_TB3Status):
         if not isinstance(other, self.__class__):
             return False
         if all(self.lidar_data != other.lidar_data):
+            return False
+        if self.hit_wall != other.hit_wall:
             return False
         return True
 
@@ -145,3 +158,16 @@ class TB3Status(metaclass=Metaclass_TB3Status):
                  True), \
                 "The 'lidar_data' field must be a set or sequence with length 8 and each value of type 'float'"
         self._lidar_data = numpy.array(value, dtype=numpy.float32)
+
+    @property
+    def hit_wall(self):
+        """Message field 'hit_wall'."""
+        return self._hit_wall
+
+    @hit_wall.setter
+    def hit_wall(self, value):
+        if __debug__:
+            assert \
+                isinstance(value, bool), \
+                "The 'hit_wall' field must be of type 'bool'"
+        self._hit_wall = value

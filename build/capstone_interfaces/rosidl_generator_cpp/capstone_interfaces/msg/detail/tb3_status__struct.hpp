@@ -35,6 +35,14 @@ struct TB3Status_
   explicit TB3Status_(rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
   {
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
+    {
+      this->hit_wall = false;
+    } else if (rosidl_runtime_cpp::MessageInitialization::ZERO == _init) {
+      std::fill<typename std::array<float, 8>::iterator, float>(this->lidar_data.begin(), this->lidar_data.end(), 0.0f);
+      this->hit_wall = false;
+    }
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
       std::fill<typename std::array<float, 8>::iterator, float>(this->lidar_data.begin(), this->lidar_data.end(), 0.0f);
@@ -44,6 +52,14 @@ struct TB3Status_
   explicit TB3Status_(const ContainerAllocator & _alloc, rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
   : lidar_data(_alloc)
   {
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::DEFAULTS_ONLY == _init)
+    {
+      this->hit_wall = false;
+    } else if (rosidl_runtime_cpp::MessageInitialization::ZERO == _init) {
+      std::fill<typename std::array<float, 8>::iterator, float>(this->lidar_data.begin(), this->lidar_data.end(), 0.0f);
+      this->hit_wall = false;
+    }
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
@@ -55,12 +71,21 @@ struct TB3Status_
   using _lidar_data_type =
     std::array<float, 8>;
   _lidar_data_type lidar_data;
+  using _hit_wall_type =
+    bool;
+  _hit_wall_type hit_wall;
 
   // setters for named parameter idiom
   Type & set__lidar_data(
     const std::array<float, 8> & _arg)
   {
     this->lidar_data = _arg;
+    return *this;
+  }
+  Type & set__hit_wall(
+    const bool & _arg)
+  {
+    this->hit_wall = _arg;
     return *this;
   }
 
@@ -107,6 +132,9 @@ struct TB3Status_
   bool operator==(const TB3Status_ & other) const
   {
     if (this->lidar_data != other.lidar_data) {
+      return false;
+    }
+    if (this->hit_wall != other.hit_wall) {
       return false;
     }
     return true;

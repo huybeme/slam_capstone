@@ -36,6 +36,8 @@ cdr_serialize(
   {
     cdr << ros_message.lidar_data;
   }
+  // Member: hit_wall
+  cdr << (ros_message.hit_wall ? true : false);
   return true;
 }
 
@@ -48,6 +50,13 @@ cdr_deserialize(
   // Member: lidar_data
   {
     cdr >> ros_message.lidar_data;
+  }
+
+  // Member: hit_wall
+  {
+    uint8_t tmp;
+    cdr >> tmp;
+    ros_message.hit_wall = tmp ? true : false;
   }
 
   return true;
@@ -71,6 +80,12 @@ get_serialized_size(
     size_t array_size = 8;
     size_t item_size = sizeof(ros_message.lidar_data[0]);
     current_alignment += array_size * item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
+  // Member: hit_wall
+  {
+    size_t item_size = sizeof(ros_message.hit_wall);
+    current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
@@ -98,6 +113,13 @@ max_serialized_size_TB3Status(
 
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+  }
+
+  // Member: hit_wall
+  {
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   return current_alignment - initial_alignment;

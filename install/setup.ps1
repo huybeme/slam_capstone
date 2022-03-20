@@ -23,12 +23,14 @@ function _colcon_prefix_chain_powershell_source_script {
 
 # source chained prefixes
 _colcon_prefix_chain_powershell_source_script "/opt/ros/foxy\local_setup.ps1"
+_colcon_prefix_chain_powershell_source_script "/home/hle/colcon_ws/install\local_setup.ps1"
 _colcon_prefix_chain_powershell_source_script "/home/hle/Desktop/compsci/ros/activity4/install\local_setup.ps1"
 _colcon_prefix_chain_powershell_source_script "/home/hle/Desktop/compsci/ros/ros2_ws/install\local_setup.ps1"
 _colcon_prefix_chain_powershell_source_script "/home/hle/Desktop/compsci/ros/activity2/install\local_setup.ps1"
 _colcon_prefix_chain_powershell_source_script "/home/hle/Desktop/compsci/ros/clientserver/install\local_setup.ps1"
 _colcon_prefix_chain_powershell_source_script "/home/hle/Desktop/compsci/ros/ir_sensor/install\local_setup.ps1"
 _colcon_prefix_chain_powershell_source_script "/home/hle/turtlebot3_ws/install\local_setup.ps1"
+_colcon_prefix_chain_powershell_source_script "/home/hle/Desktop/compsci/ros/mapping_controller/install\local_setup.ps1"
 
 # source this prefix
 $env:COLCON_CURRENT_PREFIX=(Split-Path $PSCommandPath -Parent)
