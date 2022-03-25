@@ -1,0 +1,13 @@
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/capstone_slam.launch.py
+-- Up-to-date symlink: /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/display.launch.py
+-- Symlinking: /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/robot_start.launch.py
+CMake Error at ament_cmake_symlink_install/ament_cmake_symlink_install.cmake:100 (message):
+  ament_cmake_symlink_install_directory() can't find
+  '/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_bringup/config'
+Call Stack (most recent call first):
+  ament_cmake_symlink_install/ament_cmake_symlink_install.cmake:314 (ament_cmake_symlink_install_directory)
+  cmake_install.cmake:41 (include)
+
+

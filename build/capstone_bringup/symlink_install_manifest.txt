@@ -1,5 +1,6 @@
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/capstone_slam.launch.py
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/display.launch.py
+/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/robot_start.launch.py
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/ament_index/resource_index/package_run_dependencies/capstone_bringup
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/ament_index/resource_index/parent_prefix_path/capstone_bringup
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/environment/ament_prefix_path.sh

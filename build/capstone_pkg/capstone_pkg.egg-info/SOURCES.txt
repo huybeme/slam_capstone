@@ -13,6 +13,7 @@ capstone_pkg/basic_movement.py
 capstone_pkg/circle_around.py
 capstone_pkg/occupancy_grid.py
 capstone_pkg/robot_controller.py
+capstone_pkg/robot_state_pub.py
 capstone_pkg/robot_world.py
 capstone_pkg/stop_movement.py
 capstone_pkg/tb3_status.py

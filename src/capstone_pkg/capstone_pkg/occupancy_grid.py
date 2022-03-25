@@ -15,7 +15,7 @@ class OccupancyNode(Node):
         super().__init__("occupancy_grid")
         self.resolution = 0.05
 
-        self.local_dimension = 4.0
+        self.local_dimension = 2.5
         self.local_size_x = int(self.local_dimension / self.resolution)
         self.local_size_y = int(self.local_dimension / self.resolution)
         self.local_origin = -1 * self.local_dimension / 2               # x and y
@@ -36,26 +36,14 @@ class OccupancyNode(Node):
         self.local_current_x = 0
         self.local_current_y = 0
 
-        # variable last 0.0/theta_offset
-        local_q = quaternion_from_euler(0.0, 0.0, 0.0)
-        self.laser_transformer = TransformStamped()
-        self.laser_transformer.header.frame_id = "base_link"
-        self.laser_transformer.child_frame_id = "base_scan"
-        self.laser_transformer.transform.translation.x = 0.0    # laseroffsetx
-        self.laser_transformer.transform.translation.y = 0.0    #
-        self.laser_transformer.transform.rotation.x = local_q[0]
-        self.laser_transformer.transform.rotation.y = local_q[1]
-        self.laser_transformer.transform.rotation.z = local_q[2]
-        self.laser_transformer.transform.rotation.w = local_q[3]
-
-        self.global_dimension = 20
+        self.global_dimension = 5
         self.global_size_x = int(self.global_dimension / self.resolution)
         self.global_size_y = int(self.global_dimension / self.resolution)
         self.global_origin = -1 * self.global_dimension / 2
         self.global_size = int(self.global_dimension / self.resolution)
 
         self.global_grid = OccupancyGrid()
-        self.global_grid.header.frame_id = "global_world"
+        self.global_grid.header.frame_id = "odom"
         self.global_grid.info.resolution = self.resolution
         self.global_grid.info.height = self.global_size_y
         self.global_grid.info.width = self.global_size_x
@@ -68,6 +56,21 @@ class OccupancyNode(Node):
             OccupancyGrid, "global_map", 10
         )
 
+        # variable last 0.0/theta_offset
+        local_q = quaternion_from_euler(0.0, 0.0, 0.0)
+        self.map_odom_t = TransformStamped()
+        self.map_odom_t.header.frame_id = "map"
+        self.map_odom_t.child_frame_id = "odom"
+        self.map_odom_t.transform.translation.z = 0.0
+        self.map_odom_t.transform.translation.x = 0.001
+        self.map_odom_t.transform.translation.y = 0.001
+        self.map_odom_t.transform.rotation.x = 0.001
+        self.map_odom_t.transform.rotation.y = 0.001
+        self.map_odom_t.transform.rotation.z = 0.001
+        self.map_odom_t.transform.rotation.w = 0.001
+
+        self.map_odom_br = TransformBroadcaster(self)
+
         self.laser_subscriber = self.create_subscription(
             LaserScan, "scan", self.callback_laser_data, qos_profile_sensor_data
         )
@@ -78,54 +81,43 @@ class OccupancyNode(Node):
         self.reset_odom_pub = self.create_publisher(
             Odometry, "odom", 10
         )
-        self.odom_reset = False
-        self.reset_odom_timer = self.create_timer(1.0, self.reset_odom)
 
         self.map_publisher = self.create_publisher(
             OccupancyGrid, "map", 10
         )
-        self.map_publisher_timer = self.create_timer(0.5, self.publish_map)
-
-        self.tf_broadcaster = TransformBroadcaster(self)
+        self.map_publisher_timer = self.create_timer(0.1, self.publish_map)
 
         self.get_logger().info("Occupancy Node has started")
 
-    def reset_odom(self):
-        pass
-
-        # odom = Odometry()
-        # odom.pose.pose.position.x = 0.0
-        # self.odom_reset = True
-        # self.reset_odom_pub.publish(odom)
-        # print("odom has been reset")
-
     def publish_map(self):
         self.map_publisher.publish(self.local_grid)
-        print(self.local_grid.info.origin)
+        # print(self.local_grid.info.origin)
         self.global_grid_publisher.publish(self.global_grid)
 
     def callback_odometry(self, msg):
-        # self.local_current_x = msg.pose.pose.position.x
-        # self.local_current_y = msg.pose.pose.position.y
-        # orientation = msg.pose.pose.orientation
-        # orientation = (orientation.x, orientation.y,
-        #                orientation.z, orientation.w)
-
-        self.local_grid.info.origin.position.x = msg.pose.pose.position.x
-        self.local_grid.info.origin.position.y = msg.pose.pose.position.y
+        self.local_current_x = msg.pose.pose.position.x
+        self.local_current_y = msg.pose.pose.position.y
         orientation = msg.pose.pose.orientation
         orientation = (orientation.x, orientation.y,
                        orientation.z, orientation.w)
+
+        # self.local_grid.info.origin.position.x = msg.pose.pose.position.x
+        # self.local_grid.info.origin.position.y = msg.pose.pose.position.y
+        # orientation = msg.pose.pose.orientation
+        # orientation = (orientation.x, orientation.y,
+        #                orientation.z, orientation.w)
         self.local_theta = euler_from_quaternion(orientation)[2]
 
-        self.local_grid.info.origin.orientation.z = orientation[2]
-        # print(self.local_current_x, self.local_current_y)
+        # shift map a small bit or else NaN
+        self.map_odom_t.header.stamp = self.get_clock().now().to_msg()
+        self.map_odom_br.sendTransform(self.map_odom_t)
+
 
     def callback_laser_data(self, msg):
 
         # get the sensor angle, happens at every degree
         robot_angles = []
-        limit_robot_max_range = 1.0
+        limit_robot_max_range = 3.5
         for i in range(len(msg.ranges)):
             robot_angles.append(msg.angle_min + i * msg.angle_increment)
 
@@ -159,13 +151,26 @@ class OccupancyNode(Node):
 
             # make everything from start to end free
             for x, y in bresenham_path:
-                index = y * self.local_size_x + x
-                self.local_grid.data[index] = 0
+
+                try:
+                    index = y * self.local_size_x + x
+                    global_i = (y + self.local_current_y) * self.global_size_x + (x + self.local_current_x)
+                    self.local_grid.data[index] = 0
+                    self.global_grid.data[index] = 0
+                except:
+                    print("[1] index out of bounds", y * self.local_size_x + x)
+                    continue
 
             # anything within range, occupy
             index = grid_cord_xy1[1] * self.local_size_x + grid_cord_xy1[0]
+            global_i = (grid_cord_xy1[1] + self.local_current_y) * self.global_size_x + (grid_cord_xy1[0] + self.local_current_x)
             if ranges < limit_robot_max_range:
-                self.local_grid.data[index] = 100
+                try:
+                    self.local_grid.data[index] = 100
+                    self.global_grid.data[index] = 100
+                except:
+                    print("[2] index out of bounds", index)
+                    continue
 
     def bresenham(self, x0, y0, x1, y1):
         # algoirth source: https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm

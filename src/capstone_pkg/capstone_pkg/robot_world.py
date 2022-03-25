@@ -9,12 +9,12 @@ class RobotWordNode(Node):
         super().__init__("blahblah")
 
         self.sub_map = self.create_subscription(
-            OccupancyGrid, "map", self.get_grid, 10
+            OccupancyGrid, "global_map", self.get_grid, 10
         )
 
-        self.sub_odom = self.create_subscription(
-            Odometry, "odom", self.get_odom, 10
-        )
+        # self.sub_odom = self.create_subscription(
+        #     Odometry, "odom", self.get_odom, 10
+        # )
 
     def get_odom(self, msg):
         print(msg.pose.pose.position)
@@ -23,7 +23,22 @@ class RobotWordNode(Node):
         # print(msg.twist.twist.angular)
 
     def get_grid(self, msg):
-        self.print_local_grid(msg.data)
+        pass
+
+        with open('local_grid.txt', 'w') as output_grid:
+            for i, grid in enumerate(msg.data):
+                if grid == 0:
+                    output_grid.write(' ')
+                elif grid == -1:
+                    output_grid.write('*')
+                else:
+                    output_grid.write("o")
+
+                if i % msg.info.width == 0 and i > 0:
+                    output_grid.write('\n')
+
+
+        # self.print_local_grid(msg.data)
 
     def print_local_grid(self, msg):
         path = []
