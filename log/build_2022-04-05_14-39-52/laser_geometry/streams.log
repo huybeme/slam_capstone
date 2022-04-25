@@ -1,0 +1,65 @@
+[0.026s] Invoking command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/laser_geometry': CMAKE_PREFIX_PATH=/home/hle/Desktop/compsci/ros/ros2_ws/install/ws_bringup:/home/hle/Desktop/compsci/ros/ros2_ws/install/launch:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_robot_interfaces:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_cpp_pkg:/home/hle/turtlebot3_ws/install/turtlebot3:/home/hle/turtlebot3_ws/install/turtlebot3_simulations:/home/hle/turtlebot3_ws/install/turtlebot3_bringup:/home/hle/turtlebot3_ws/install/turtlebot3_node:/home/hle/turtlebot3_ws/install/turtlebot3_navigation2:/home/hle/turtlebot3_ws/install/turtlebot3_fake_node:/home/hle/turtlebot3_ws/install/turtlebot3_msgs:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/Desktop/compsci/ros/ros2_ws/install/tf_transformations:/home/hle/Desktop/compsci/ros/mapping_controller/install/mapping_controller:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy:/home/hle/turtlebot3_ws/install/turtlebot3_gazebo:/home/hle/turtlebot3_ws/install/turtlebot3_description:/home/hle/turtlebot3_ws/install/turtlebot3_cartographer:/home/hle/turtlebot3_ws/install/dynamixel_sdk_examples:/home/hle/turtlebot3_ws/install/dynamixel_sdk_custom_interfaces:/home/hle/turtlebot3_ws/install/dynamixel_sdk:/home/hle/Desktop/compsci/ros/activity2/install/activity_bringup:/home/hle/Desktop/compsci/ros/activity4/install/interfaces:/home/hle/Desktop/compsci/ros/slam_capstone/install/launch:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg_cpp:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_interfaces /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/laser_geometry -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/laser_geometry
+[0.075s] -- The C compiler identification is GNU 9.4.0
+[0.143s] -- The CXX compiler identification is GNU 9.4.0
+[0.150s] -- Check for working C compiler: /usr/bin/cc
+[0.216s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.217s] -- Detecting C compiler ABI info
+[0.284s] -- Detecting C compiler ABI info - done
+[0.295s] -- Detecting C compile features
+[0.295s] -- Detecting C compile features - done
+[0.298s] -- Check for working CXX compiler: /usr/bin/c++
+[0.372s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[0.373s] -- Detecting CXX compiler ABI info
+[0.449s] -- Detecting CXX compiler ABI info - done
+[0.461s] -- Detecting CXX compile features
+[0.461s] -- Detecting CXX compile features - done
+[0.464s] -- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.504s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.504s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.678s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.708s] -- Found rclcpp: 2.4.1 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.754s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.762s] -- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[0.830s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[0.861s] -- Found FastRTPS: /opt/ros/foxy/include  
+[0.970s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.023s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[1.025s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.025s] -- Looking for pthread.h
+[1.082s] -- Looking for pthread.h - found
+[1.082s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.148s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[1.149s] -- Looking for pthread_create in pthreads
+[1.201s] -- Looking for pthread_create in pthreads - not found
+[1.201s] -- Looking for pthread_create in pthread
+[1.264s] -- Looking for pthread_create in pthread - found
+[1.265s] -- Found Threads: TRUE  
+[1.409s] -- Found sensor_msgs: 2.0.5 (/opt/ros/foxy/share/sensor_msgs/cmake)
+[1.510s] -- Found tf2: 0.13.13 (/opt/ros/foxy/share/tf2/cmake)
+[1.522s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/foxy/share/eigen3_cmake_module/cmake)
+[1.526s] -- Found Eigen3: TRUE (found version "3.3.7") 
+[1.532s] -- Found ament_cmake_cppcheck: 0.9.6 (/opt/ros/foxy/share/ament_cmake_cppcheck/cmake)
+[1.534s] -- Found ament_cmake_cpplint: 0.9.6 (/opt/ros/foxy/share/ament_cmake_cpplint/cmake)
+[1.536s] -- Found ament_cmake_lint_cmake: 0.9.6 (/opt/ros/foxy/share/ament_cmake_lint_cmake/cmake)
+[1.538s] -- Found ament_cmake_uncrustify: 0.9.6 (/opt/ros/foxy/share/ament_cmake_uncrustify/cmake)
+[1.543s] -- Found ament_cmake_gtest: 0.9.9 (/opt/ros/foxy/share/ament_cmake_gtest/cmake)
+[1.545s] -- Found ament_cmake_gmock: 0.9.9 (/opt/ros/foxy/share/ament_cmake_gmock/cmake)
+[1.547s] -- Found gtest sources under '/opt/ros/foxy/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.550s] -- Check if compiler accepts -pthread
+[1.608s] -- Check if compiler accepts -pthread - yes
+[1.676s] -- Configuring done
+[1.676s] CMake Error at CMakeLists.txt:20 (add_library):
+[1.676s]   Cannot find source file:
+[1.677s] 
+[1.677s]     src/laser_geometry.cpp
+[1.677s] 
+[1.677s]   Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
+[1.677s]   .hpp .hxx .in .txx
+[1.677s] 
+[1.677s] 
+[1.677s] CMake Error at CMakeLists.txt:20 (add_library):
+[1.678s]   No SOURCES given to target: laser_geometry
+[1.678s] 
+[1.678s] 
+[1.678s] CMake Generate step failed.  Build files cannot be regenerated correctly.
+[1.685s] Invoked command in '/home/hle/Desktop/compsci/ros/slam_capstone/build/laser_geometry' returned '1': CMAKE_PREFIX_PATH=/home/hle/Desktop/compsci/ros/ros2_ws/install/ws_bringup:/home/hle/Desktop/compsci/ros/ros2_ws/install/launch:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_robot_interfaces:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_cpp_pkg:/home/hle/turtlebot3_ws/install/turtlebot3:/home/hle/turtlebot3_ws/install/turtlebot3_simulations:/home/hle/turtlebot3_ws/install/turtlebot3_bringup:/home/hle/turtlebot3_ws/install/turtlebot3_node:/home/hle/turtlebot3_ws/install/turtlebot3_navigation2:/home/hle/turtlebot3_ws/install/turtlebot3_fake_node:/home/hle/turtlebot3_ws/install/turtlebot3_msgs:/home/hle/Desktop/compsci/ros/ros2_ws/install/my_py_pkg:/home/hle/Desktop/compsci/ros/ros2_ws/install/tf_transformations:/home/hle/Desktop/compsci/ros/mapping_controller/install/mapping_controller:/home/hle/turtlebot3_ws/install/turtlebot3_teleop:/home/hle/turtlebot3_ws/install/turtlebot3_example:/home/hle/Desktop/compsci/ros/ir_sensor/install/ir_sensor_pkg:/home/hle/Desktop/compsci/ros/clientserver/install/clientserver_pkg:/home/hle/Desktop/compsci/ros/activity2/install/activity:/home/hle/Desktop/compsci/ros/activity4/install/packages:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg:/opt/ros/foxy:/home/hle/turtlebot3_ws/install/turtlebot3_gazebo:/home/hle/turtlebot3_ws/install/turtlebot3_description:/home/hle/turtlebot3_ws/install/turtlebot3_cartographer:/home/hle/turtlebot3_ws/install/dynamixel_sdk_examples:/home/hle/turtlebot3_ws/install/dynamixel_sdk_custom_interfaces:/home/hle/turtlebot3_ws/install/dynamixel_sdk:/home/hle/Desktop/compsci/ros/activity2/install/activity_bringup:/home/hle/Desktop/compsci/ros/activity4/install/interfaces:/home/hle/Desktop/compsci/ros/slam_capstone/install/launch:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_pkg_cpp:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup:/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_interfaces /usr/bin/cmake /home/hle/Desktop/compsci/ros/slam_capstone/src/laser_geometry -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/hle/Desktop/compsci/ros/slam_capstone/install/laser_geometry

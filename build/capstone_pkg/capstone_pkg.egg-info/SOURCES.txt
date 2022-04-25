@@ -17,6 +17,7 @@ capstone_pkg/robot_state_pub.py
 capstone_pkg/robot_world.py
 capstone_pkg/stop_movement.py
 capstone_pkg/tb3_status.py
+capstone_pkg/transforms.py
 capstone_pkg.egg-info/PKG-INFO
 capstone_pkg.egg-info/SOURCES.txt
 capstone_pkg.egg-info/dependency_links.txt

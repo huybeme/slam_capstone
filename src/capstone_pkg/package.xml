@@ -13,7 +13,7 @@
   <depend>nav_msgs</depend>
   <depend>python3-scipy</depend>
   <depend>python-numpy</depend>
-  
+  <depend>laser_geometry</depend>
 
   <depend>examples_interface</depend>
   <depend>capstone_interfaces</depend>

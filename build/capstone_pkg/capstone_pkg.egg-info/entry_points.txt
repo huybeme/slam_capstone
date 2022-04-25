@@ -1,8 +1,10 @@
 [console_scripts]
 basic_movement = capstone_pkg.basic_movement:main
 circle_around = capstone_pkg.circle_around:main
+laser_geomtry = laser_geometry.src.laser_geometry
 occupancy_grid = capstone_pkg.occupancy_grid:main
 robot_world = capstone_pkg.robot_world:main
 stop_movement = capstone_pkg.stop_movement:main
 tb3_status = capstone_pkg.tb3_status:main
+transforms = capstone_pkg.transforms:main
 

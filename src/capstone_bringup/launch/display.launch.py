@@ -4,8 +4,10 @@ from launch.substitutions import Command, LaunchConfiguration
 import launch_ros
 import os
 
+
 def generate_launch_description():
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../..'))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../../../../"))
+    print(project_root)
     urdf_path = os.path.join(project_root, 'src/config/tb3_description.urdf')
     rviz_path = os.path.join(project_root, 'src/config/tb3_urdf.rviz')
 

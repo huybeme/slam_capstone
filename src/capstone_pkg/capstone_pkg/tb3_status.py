@@ -24,17 +24,18 @@ class tb3_status_node(Node):
         self.lidar_pub = self.create_publisher(
             TB3Status, "tb3_lidar_values", 10
         )
+        self.battery = 0
 
         print("tb3_status_node has been started")
 
     def callback_battery(self, msg):
-        if msg.percentage < 20.0 and msg.percentage > 0.1:
-            print("low battery: (%): {:.2f}".format(msg.percentage))
+        # print("low battery: (%): {:.2f}".format(msg.percentage))
+        self.battery = msg.percentage
 
     def callback_lidar(self, msg):
-        lidar_arr = [float("{:.3f}".format(msg.ranges[225])), float("{:.3f}".format(msg.ranges[180])), float("{:.3f}".format(msg.ranges[135])),
-                     float("{:.3f}".format(msg.ranges[270])), float("{:.3f}".format(msg.ranges[90])),
-                     float("{:.3f}".format(msg.ranges[315])), float("{:.3f}".format(msg.ranges[0])), float("{:.3f}".format(msg.ranges[45]))]
+        lidar_arr = [float("{:.3f}".format(msg.ranges[45])),    float("{:.3f}".format(msg.ranges[0])),      float("{:.3f}".format(msg.ranges[315])),
+                     float("{:.3f}".format(msg.ranges[90])),                                                float("{:.3f}".format(msg.ranges[270])),
+                     float("{:.3f}".format(msg.ranges[135])),   float("{:.3f}".format(msg.ranges[180])),    float("{:.3f}".format(msg.ranges[225]))]
                      
         # note, sensor installed backwards
         lidar_front = {'315': lidar_arr[0], '__0': lidar_arr[1], '_45': lidar_arr[2]}
@@ -44,6 +45,7 @@ class tb3_status_node(Node):
         print(lidar_front)
         print(lidar_sides)
         print(lidar_rear)
+        print("{:.2f}".format(self.battery))
         print()
         lidar_msg = TB3Status()
         lidar_msg.lidar_data = lidar_arr

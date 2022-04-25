@@ -1,3 +1,4 @@
+/home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/__pycache__/display.launch.cpython-38.pyc
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/capstone_slam.launch.py
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/display.launch.py
 /home/hle/Desktop/compsci/ros/slam_capstone/install/capstone_bringup/share/capstone_bringup/launch/robot_start.launch.py

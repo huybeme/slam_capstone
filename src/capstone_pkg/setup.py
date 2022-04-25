@@ -26,6 +26,8 @@ setup(
             "circle_around = capstone_pkg.circle_around:main",
             "occupancy_grid = capstone_pkg.occupancy_grid:main",
             "robot_world = capstone_pkg.robot_world:main",
+            "transforms = capstone_pkg.transforms:main",
+            "laser_geomtry = laser_geometry.src.laser_geometry"
         ],
     },
 )
