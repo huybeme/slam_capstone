@@ -1,0 +1,52 @@
+#----------- start ------------------#
+# this was for robot world
+# the purpose was to create an array of arrays from the map
+# in order to use numpy to flip the map to align with rviz2
+# and then write it into a text file
+
+        # build 2D array from 1D OccupancyGrid -- may not be necessary
+        processed_grid = []
+        temp_grid = []
+        for height, cell in enumerate(msg.data, 1):
+            temp_grid.append(cell)
+            if height % msg.info.width == 0 and height > 0:
+                processed_grid.append(temp_grid)
+                temp_grid = []
+
+        # 2D grid allows np to flip the array since OccupancyGrid is mirrored
+        # relative to rviz2
+        # processed_grid = np.flipud(processed_grid)    # may not be needed
+
+        # get the grid and output into a text file -- mainly used for troubleshooting
+        i_tracker = 0
+        with open('local_grid.txt', 'w') as output_grid:
+            for height, j in enumerate(processed_grid):
+                for width, grid in enumerate(processed_grid[height]):
+                    i_tracker += 1
+                    if grid == -1:
+                        output_grid.write("  *  ")
+                    elif grid >= 0 and grid < 10:
+                        output_grid.write("  " + str(grid) + "  ")
+                    elif grid >= 10 and grid < 100:
+                        output_grid.write("  " + str(grid) + " ")
+                    elif grid == 100:
+                        output_grid.write(" " + str(grid) + " ")
+                    else:
+                        output_grid.write(" ")
+
+                    if i_tracker == robot_i:
+                        output_grid.write("  r  ")
+
+                    if i_tracker == si:
+                        output_grid.write("  m  ")
+
+                    for i in start_area_i:
+                        if i_tracker == i:
+                            output_grid.write("  s  ")
+
+                output_grid.write("\n")
+        i_tracker = 0
+
+    #for i in range(len(msg.data) -1, -1, -1): enumerate array backwards
+
+#----------- start ------------------#

@@ -1,1 +1,0 @@
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_pkg_cpp/ament_cmake_environment_hooks/local_setup.bash

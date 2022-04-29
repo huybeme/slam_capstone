@@ -1,1 +1,0 @@
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_interfaces/ament_cmake_core/capstone_interfacesConfig.cmake
