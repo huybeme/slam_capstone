@@ -1,3 +1,0 @@
-/home/hle/Desktop/compsci/ros/slam_capstone/install/laser_geometry/lib/liblaser_geometry.so
-/home/hle/Desktop/compsci/ros/slam_capstone/install/laser_geometry/share/laser_geometry/cmake/laser_geometryExport.cmake
-/home/hle/Desktop/compsci/ros/slam_capstone/install/laser_geometry/share/laser_geometry/cmake/laser_geometryExport-noconfig.cmake

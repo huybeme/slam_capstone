@@ -1,7 +1,0 @@
-[01m[K/home/hle/Desktop/compsci/ros/slam_capstone/src/capstone_pkg_cpp/src/odom_map_transform.cpp:1:10:[m[K [01;31m[Kfatal error: [m[Krclpp/rclpp.hpp: No such file or directory
-    1 | #include [01;31m[K<rclpp/rclpp.hpp>[m[K
-      |          [01;31m[K^~~~~~~~~~~~~~~~~[m[K
-compilation terminated.
-make[2]: *** [CMakeFiles/odom_map_transform.dir/build.make:63: CMakeFiles/odom_map_transform.dir/src/odom_map_transform.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/odom_map_transform.dir/all] Error 2
-make: *** [Makefile:141: all] Error 2

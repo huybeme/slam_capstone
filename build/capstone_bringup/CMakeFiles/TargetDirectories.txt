@@ -1,9 +1,0 @@
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/install/strip.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/install/local.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/install.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/list_install_components.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/rebuild_cache.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/edit_cache.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/test.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/capstone_bringup_uninstall.dir
-/home/hle/Desktop/compsci/ros/slam_capstone/build/capstone_bringup/CMakeFiles/uninstall.dir

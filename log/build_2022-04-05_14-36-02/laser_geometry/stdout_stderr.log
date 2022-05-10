@@ -1,7 +1,0 @@
-[35m[1mScanning dependencies of target laser_geometry[0m
-make[2]: *** No rule to make target '/home/hle/Desktop/compsci/ros/slam_capstone/src/laser_geometry/src/laser_geometry.cpp', needed by 'CMakeFiles/laser_geometry.dir/src/laser_geometry.cpp.o'.  Stop.
-make[1]: *** [CMakeFiles/Makefile2:101: CMakeFiles/laser_geometry.dir/all] Error 2
-make[1]: *** Waiting for unfinished jobs....
-[ 25%] Built target gtest_main
-[ 50%] Built target gtest
-make: *** [Makefile:141: all] Error 2

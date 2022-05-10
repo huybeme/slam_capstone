@@ -1,4 +1,0 @@
-source;share/capstone_interfaces/local_setup.bash
-source;share/capstone_interfaces/local_setup.dsv
-source;share/capstone_interfaces/local_setup.sh
-source;share/capstone_interfaces/local_setup.zsh
