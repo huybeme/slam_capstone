@@ -21,7 +21,11 @@ class tps_node(Node):
     def callback_temp_publisher(self):
         
         if self.ser.in_waiting > 0:
-            line = float(self.ser.readline().decode('utf-8').rstrip())
+            line = self.ser.readline().decode('utf-8').rstrip()
+            if line == '':
+                return
+            else:
+                line = float(line)
             temp = Float32()
             temp.data = line
             self.tps_publisher.publish(temp)
