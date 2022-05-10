@@ -49,6 +49,8 @@ class RobotWordNode(Node):
         self.robot_area_grid = []
         self.robot_area_i = []
 
+        self.state = 0
+
         self.get_logger().info("robot world started")
 
     def callback_service(self, request, response):
@@ -93,9 +95,10 @@ class RobotWordNode(Node):
         robot_i = self.to_index(robot_xy[0], robot_xy[1], msg.info.width)
 
         # get location after robot initialzation through services
-        if self.robot_service_completed:
+        if self.robot_service_completed and self.state == 0:
             self.start_xy_pose = [self.vector.x, self.vector.y]  # robot_xy
             self.start_found = True
+            self.state = 1
 
         start_area_grid = []
         start_area_i = []
@@ -146,6 +149,22 @@ class RobotWordNode(Node):
 
                 if i % msg.info.width == 0 and i > 0:
                     output.write("\n")
+
+        with open('local_map_arr.txt', 'w') as output:
+            for i, grid in enumerate(msg.data, 1):
+                output.write(str(grid))
+                if i != len(msg.data):
+                    output.write(",")
+            output.write("\n")
+            output.write("map_width: " + str(msg.info.width))
+            output.write("\n")
+            output.write("map_height: " + str(msg.info.height))
+            output.write("\n")
+            output.write("map_resolution: " + str(msg.info.resolution))
+            output.write("\n")
+            output.write("map_pose_x: " + str(msg.info.origin.position.x))      # do i need q?
+            output.write("\n")
+            output.write("map_pose_y: " + str(msg.info.origin.position.y))
 
     # do i use this?
 
