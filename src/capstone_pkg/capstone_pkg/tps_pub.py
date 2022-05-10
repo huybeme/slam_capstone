@@ -14,7 +14,7 @@ class tps_node(Node):
         self.tps_publisher = self.create_publisher(
             Float32, "tps_node", 10
         )
-        self.pub_timer = self.create_timer(0.5, self.callback_temp_publisher)
+        self.pub_timer = self.create_timer(0.1, self.callback_temp_publisher)
         
         self.get_logger().info("TPS10 node started")
 
@@ -22,7 +22,7 @@ class tps_node(Node):
         
         if self.ser.in_waiting > 0:
             line = self.ser.readline().decode('utf-8').rstrip()
-            if line == '':
+            if line == isinstance(line, str):
                 return
             else:
                 line = float(line)
