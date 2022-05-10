@@ -22,10 +22,10 @@ class tps_node(Node):
         
         if self.ser.in_waiting > 0:
             line = self.ser.readline().decode('utf-8').rstrip()
-            if line == isinstance(line, str):
-                return
-            else:
+            try:
                 line = float(line)
+            except:
+                return
             temp = Float32()
             temp.data = line
             self.tps_publisher.publish(temp)
