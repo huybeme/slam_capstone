@@ -24,7 +24,7 @@ class tps_node(Node):
             line = float(self.ser.readline().decode('utf-8').rstrip())
             temp = Float32()
             temp.data = line
-            self.tps_publisher.publish(line)
+            self.tps_publisher.publish(temp)
             print(line)
 
 
