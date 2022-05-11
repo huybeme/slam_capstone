@@ -19,6 +19,8 @@ class tps_node(Node):
         self.get_logger().info("TPS10 node started")
 
     def callback_temp_publisher(self):
+
+        self.ser.write(b"true")
         
         if self.ser.in_waiting > 0:
             line = self.ser.readline().decode('utf-8').rstrip()
@@ -30,6 +32,8 @@ class tps_node(Node):
             temp.data = line
             self.tps_publisher.publish(temp)
             print(line)
+        else:
+            print("else statement")
 
 
 def main(args=None):
