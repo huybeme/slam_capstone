@@ -4,6 +4,7 @@ from rclpy.node import Node
 from std_msgs.msg import Float32
 import serial
 
+
 class tps_node(Node):
     def __init__(self):
         super().__init__("tps_node")
@@ -15,29 +16,22 @@ class tps_node(Node):
             Float32, "tps_node", 10
         )
         self.pub_timer = self.create_timer(1.0, self.callback_temp_publisher)
-        
+
         self.get_logger().info("TPS10 node started")
 
     def callback_temp_publisher(self):
 
-        #if self.ser.in_waiting > 0:
-      self.ser.write(b"testing")
-      print(self.ser.readline())
-        
-        # if self.ser.in_waiting > 0:
-        #     self.ser.write(b"true")
-        #
-        #     line = self.ser.readline().decode('utf-8').rstrip()
-        #     try:
-        #         line = float(line)
-        #     except:
-        #         return
-        #     temp = Float32()
-        #     temp.data = line
-        #     self.tps_publisher.publish(temp)
-        #     print(line)
-        # else:
-        #     print("else statement")
+        self.ser.write(b"testing")
+        msg = self.ser.readline()
+
+        try:
+            msg = float(msg)
+        except:
+            return
+
+        temp = Float32()
+        temp.data = msg
+        self.tps_publisher(temp)
 
 
 def main(args=None):
