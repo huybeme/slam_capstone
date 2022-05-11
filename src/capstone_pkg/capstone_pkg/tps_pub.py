@@ -22,6 +22,7 @@ class tps_node(Node):
 
         if self.ser.in_waiting > 0:
             self.ser.write(b"testing")
+            print(self.ser.readline())
         
         # if self.ser.in_waiting > 0:
         #     self.ser.write(b"true")
