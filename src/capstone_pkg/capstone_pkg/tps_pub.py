@@ -8,7 +8,7 @@ class tps_node(Node):
     def __init__(self):
         super().__init__("tps_node")
 
-        self.ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+        self.ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
         self.ser.reset_input_buffer()
 
         self.tps_publisher = self.create_publisher(
