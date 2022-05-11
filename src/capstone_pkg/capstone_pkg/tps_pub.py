@@ -20,9 +20,9 @@ class tps_node(Node):
 
     def callback_temp_publisher(self):
 
-        if self.ser.in_waiting > 0:
-            self.ser.write(b"testing")
-            print(self.ser.readline())
+        #if self.ser.in_waiting > 0:
+      self.ser.write(b"testing")
+      print(self.ser.readline())
         
         # if self.ser.in_waiting > 0:
         #     self.ser.write(b"true")
