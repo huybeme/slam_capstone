@@ -19,10 +19,10 @@ class tps_node(Node):
         self.get_logger().info("TPS10 node started")
 
     def callback_temp_publisher(self):
-
-        self.ser.write(b"true")
         
         if self.ser.in_waiting > 0:
+            self.ser.write(b"true")
+
             line = self.ser.readline().decode('utf-8').rstrip()
             try:
                 line = float(line)
