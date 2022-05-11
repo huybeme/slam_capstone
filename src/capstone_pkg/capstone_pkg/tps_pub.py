@@ -14,26 +14,29 @@ class tps_node(Node):
         self.tps_publisher = self.create_publisher(
             Float32, "tps_node", 10
         )
-        self.pub_timer = self.create_timer(0.1, self.callback_temp_publisher)
+        self.pub_timer = self.create_timer(1.0, self.callback_temp_publisher)
         
         self.get_logger().info("TPS10 node started")
 
     def callback_temp_publisher(self):
-        
-        if self.ser.in_waiting > 0:
-            self.ser.write(b"true")
 
-            line = self.ser.readline().decode('utf-8').rstrip()
-            try:
-                line = float(line)
-            except:
-                return
-            temp = Float32()
-            temp.data = line
-            self.tps_publisher.publish(temp)
-            print(line)
-        else:
-            print("else statement")
+        if self.ser.in_waiting > 0:
+            self.ser.write(b"testing")
+        
+        # if self.ser.in_waiting > 0:
+        #     self.ser.write(b"true")
+        #
+        #     line = self.ser.readline().decode('utf-8').rstrip()
+        #     try:
+        #         line = float(line)
+        #     except:
+        #         return
+        #     temp = Float32()
+        #     temp.data = line
+        #     self.tps_publisher.publish(temp)
+        #     print(line)
+        # else:
+        #     print("else statement")
 
 
 def main(args=None):
