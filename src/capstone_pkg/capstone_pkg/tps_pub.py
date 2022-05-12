@@ -15,7 +15,7 @@ class tps_node(Node):
         self.tps_publisher = self.create_publisher(
             Float32, "tps_node", 10
         )
-        self.pub_timer = self.create_timer(1.0, self.callback_temp_publisher)
+        self.pub_timer = self.create_timer(0.5, self.callback_temp_publisher)
 
         self.get_logger().info("TPS10 node started")
 
@@ -31,7 +31,8 @@ class tps_node(Node):
 
         temp = Float32()
         temp.data = msg
-        self.tps_publisher(temp)
+        print(temp.data)
+        self.tps_publisher.publish(temp)
 
 
 def main(args=None):
