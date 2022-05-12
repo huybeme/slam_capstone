@@ -27,7 +27,7 @@ setup(
             "occupancy_grid = capstone_pkg.occupancy_grid:main",
             "robot_world = capstone_pkg.robot_world:main",
             "tps_pub = capstone_pkg.tps_pub:main",
-            "laser_geomtry = laser_geometry.src.laser_geometry"
+            
         ],
     },
 )
