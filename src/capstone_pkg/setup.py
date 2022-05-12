@@ -20,7 +20,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "basic_movement = capstone_pkg.basic_movement:main",
             "stop_movement = capstone_pkg.stop_movement:main",
             "tb3_status = capstone_pkg.tb3_status:main",
             "circle_around = capstone_pkg.circle_around:main",
