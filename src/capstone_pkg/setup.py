@@ -26,6 +26,7 @@ setup(
             "circle_around = capstone_pkg.circle_around:main",
             "robot_world = capstone_pkg.robot_world:main",
             "tps_pub = capstone_pkg.tps_pub:main",
+            "tmp_pub = capstone_pkg.tps_pub:main",
             
         ],
     },
