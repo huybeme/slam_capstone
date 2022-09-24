@@ -44,7 +44,7 @@ class RobotWordNode(Node):
         self.start_xy_grid = None
         self.start_i = None
 
-        # do i need this init
+        # should I track the robot as an area within a world rather than a point
         self.robot_area_pose = []
         self.robot_area_grid = []
         self.robot_area_i = []
@@ -72,7 +72,7 @@ class RobotWordNode(Node):
         to_frame = 'map'
         try:
             now = self.get_clock().now().to_msg()
-            # go back in time n sec to get last frame
+            # go back in time n sec to get last frame since current frame "will not exist"
             now.nanosec = now.nanosec - 200000000
             trans = self.buffer.lookup_transform(
                 to_frame,
@@ -100,6 +100,7 @@ class RobotWordNode(Node):
             self.start_found = True
             self.state = 1
 
+        # get the area of the initial pose as an array
         start_area_grid = []
         start_area_i = []
         if self.start_found:

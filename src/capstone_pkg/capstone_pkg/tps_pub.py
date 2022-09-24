@@ -1,3 +1,5 @@
+# using temperature sensor TPS-10 through OpenCR 1.0 arduino board
+
 #!/usr.bin/env python3
 import rclpy
 from rclpy.node import Node

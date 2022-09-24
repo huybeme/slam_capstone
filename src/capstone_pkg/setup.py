@@ -21,9 +21,9 @@ setup(
     entry_points={
         'console_scripts': [
             "stop_movement = capstone_pkg.stop_movement:main",
+            
             "tb3_status = capstone_pkg.tb3_status:main",
             "circle_around = capstone_pkg.circle_around:main",
-            "occupancy_grid = capstone_pkg.occupancy_grid:main",
             "robot_world = capstone_pkg.robot_world:main",
             "tps_pub = capstone_pkg.tps_pub:main",
             
