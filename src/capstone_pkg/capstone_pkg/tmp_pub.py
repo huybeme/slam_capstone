@@ -23,7 +23,7 @@ class tmp_node(Node):
 
         self.bus = smbus.SMBus(self.i2c_ch)
 
-        self.val = self.bus.read_i2c_data(self.i2c_addr, self.reg_config, 2)
+        self.val = self.bus.read_i2c_block_data(self.i2c_addr, self.reg_config, 2)
         print("old config: ", self.val)
         self.val[1] = self.val[1] & 0b00111111
         self.val[1] = self.val[1] | (0b11 << 6)
