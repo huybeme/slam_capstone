@@ -4,7 +4,6 @@
 # in order to embedded into a ROS2 framework
 
 #!/usr.bin/env python3
-import re
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float32
