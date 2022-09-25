@@ -38,21 +38,21 @@ class tmp_node(Node):
             Float32, "tmp_node", 10
         )
         self.pub_timer = self.create_timer(0.1, self.callback_temp_publisher)
-        
+
         self.get_logger().info("tmp117 node started")
 
-    def twos_comp(val, bits, self):
-        if (val & (1 << (bits - 1))) != 0:
-            val = val - (1 << bits)
-        return val
 
     def read_temp(self):
 
         val = self.bus.read_i2c_block_data(self.i2c_addr, self.reg_temp, 2)
         temp_c = (val[0] << 4) | (val[1] >> 4)
-        temp_c = self.twos_comp(temp_c, 12)
+
+        bits = 12
+        if (temp_c & (1 << (bits - 1))) != 0:
+            temp_c -= (1 << bits)
+
         temp_c *= 0.0625
-        
+
         return temp_c
 
 
@@ -64,7 +64,7 @@ class tmp_node(Node):
         temp = Float32()
         temp.data = temp_f
         self.tmp_publisher.publish(temp)
-        
+
 
 
 def main(args=None):
