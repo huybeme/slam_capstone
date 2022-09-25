@@ -43,7 +43,7 @@ class tmp_node(Node):
 
     def twos_comp(val, bits, self):
         if (val & (1 << (bits - 1))) != 0:
-            val -= (1 << bits)
+            val = val - (1 << bits)
         return val
 
     def read_temp(self):
