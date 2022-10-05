@@ -9,6 +9,7 @@ from std_srvs.srv import SetBool
 import numpy as np
 
 from capstone_interfaces.msg import TB3Link
+from ament_index_python.packages import get_package_share_directory
 
 AREA = [
     [-1, 2], [0, 2], [1, 2],
@@ -18,8 +19,9 @@ AREA = [
     [-1, -2], [0, -2], [1, -2]
 ]
 
-root = os.path.dirname(__file__)
-save_map = os.path.abspath(os.join(root, "..", "maps"))
+path = os.path.dirname(__file__)
+root = os.path.abspath(os.path.join(path, "..", "..", ".."))
+save_maps = os.path.join(root, "maps")
 
 
 class RobotWordNode(Node):
@@ -80,6 +82,7 @@ class RobotWordNode(Node):
 
     # get transforms - these frames will provide robot poses relative to map frame
     def on_timer(self):
+        self.get_logger().info(save_maps)
         from_frame = self.target_frame
         to_frame = 'map'
         try:
@@ -143,7 +146,7 @@ class RobotWordNode(Node):
             map_origin_xy[0], map_origin_xy[1], msg.info.width)
 
         # outputting to txt file is for troubleshooting
-        with open(save_map + 'local_grid.txt', 'w') as output:
+        with open(save_maps + 'local_grid.txt', 'w') as output:
             for i, grid in enumerate(msg.data, 1):
                 if i == robot_i:
                     output.write(" [r] ")
@@ -165,7 +168,7 @@ class RobotWordNode(Node):
                 if i % msg.info.width == 0 and i > 0:
                     output.write("\n")
 
-        with open(save_map + 'local_map_arr.txt', 'w') as output:
+        with open(save_maps + 'local_map_arr.txt', 'w') as output:
             for i, grid in enumerate(msg.data, 1):
                 output.write(str(grid))
                 if i != len(msg.data):

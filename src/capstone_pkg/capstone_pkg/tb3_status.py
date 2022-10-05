@@ -71,7 +71,6 @@ class tb3_status_node(Node):
             self.trans_x = trans.transform.translation.x
             self.trans_y = trans.transform.translation.y
         except:
-            self.get_logger().info("cannot listen to transform")
             return
 
     def callback_battery(self, msg):
