@@ -1,11 +1,14 @@
 from concurrent.futures import process
 import rclpy
+import os
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
 from tf2_ros import TransformListener, Buffer
 from geometry_msgs.msg import Vector3, Quaternion
 from std_srvs.srv import SetBool
 import numpy as np
+
+from capstone_interfaces.msg import TB3Link
 
 AREA = [
     [-1, 2], [0, 2], [1, 2],
@@ -15,10 +18,14 @@ AREA = [
     [-1, -2], [0, -2], [1, -2]
 ]
 
+root = os.path.dirname(__file__)
+save_map = os.path.abspath(os.join(root, "..", "maps"))
+
 
 class RobotWordNode(Node):
     def __init__(self):
         super().__init__("robot_world")
+
         self.sub_map = self.create_subscription(
             OccupancyGrid, "map", self.get_grid, 10
         )
@@ -51,6 +58,11 @@ class RobotWordNode(Node):
 
         self.state = 0
 
+        self.map_link = TB3Link()
+        self.publish_map_link = self.create_publisher(
+            TB3Link, "tb3_link", 10
+        )
+
         self.get_logger().info("robot world started")
 
     def callback_service(self, request, response):
@@ -79,9 +91,11 @@ class RobotWordNode(Node):
                 from_frame,
                 now
             )
+            self.map_link.robot_world_link = True
         except:
-            print("could not find transform between map>base_fp")
+            self.map_link.robot_world_link = False
             return
+        self.publish_map_link.publish(self.map_link)
         self.vector = trans.transform.translation
         self.q = trans.transform.rotation
 
@@ -129,7 +143,7 @@ class RobotWordNode(Node):
             map_origin_xy[0], map_origin_xy[1], msg.info.width)
 
         # outputting to txt file is for troubleshooting
-        with open('local_grid.txt', 'w') as output:
+        with open(save_map + 'local_grid.txt', 'w') as output:
             for i, grid in enumerate(msg.data, 1):
                 if i == robot_i:
                     output.write(" [r] ")
@@ -151,7 +165,7 @@ class RobotWordNode(Node):
                 if i % msg.info.width == 0 and i > 0:
                     output.write("\n")
 
-        with open('local_map_arr.txt', 'w') as output:
+        with open(save_map + 'local_map_arr.txt', 'w') as output:
             for i, grid in enumerate(msg.data, 1):
                 output.write(str(grid))
                 if i != len(msg.data):

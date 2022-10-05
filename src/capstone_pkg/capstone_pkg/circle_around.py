@@ -1,11 +1,12 @@
 from functools import partial
 import rclpy
 from rclpy.node import Node
-from std_srvs.srv import SetBool, Trigger
+from std_srvs.srv import SetBool
 from geometry_msgs.msg import Twist
 import time
 
 from capstone_interfaces.msg import TB3Status
+from capstone_interfaces.msg import TB3Link
 
 
 class circle_around_node(Node):
@@ -21,9 +22,18 @@ class circle_around_node(Node):
             Twist, "cmd_vel", 10
         )
 
+        self.robot_world_link = TB3Link()
+        self.publish_robot_world_link = self.create_publisher(
+            TB3Link, "tb3_link", 10
+        )
+        self.pub_timer = self.create_timer(1, self.callback_pub_timer)
+
         self.state = 100
 
-        self.get_logger().info("circling around has begun")
+        self.get_logger().info("circling around node has begun")
+
+    def callback_pub_timer(self):
+        self.publish_robot_world_link.publish(self.robot_world_link)
 
     def callback_lidar_and_move(self, msg):
         # 1m = 39.4 in      12 in = 0.3m    1in = 0.025m    0.1m = 3.9in
@@ -49,6 +59,7 @@ class circle_around_node(Node):
 
         if self.state == 100:
             self.send_request()
+            self.robot_world_link.circle_around_link = True
             self.state = 1
 
         print("movement\n",

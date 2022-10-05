@@ -37,6 +37,12 @@ def generate_launch_description():
             name='circle_around'
         ),
 
+        Node(
+            package='capstone_pkg',
+            executable='robot_world',
+            name='robot_world'
+        ),
+
         # Node(
         #     package='cartographer_ros',
         #     executable='cartographer_node',

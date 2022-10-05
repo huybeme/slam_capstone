@@ -1,6 +1,5 @@
 import rclpy
-# need this buffer for lidar sensor
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import qos_profile_sensor_data # need this buffer for lidar sensor
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import BatteryState
@@ -13,6 +12,7 @@ from tf2_ros.transform_listener import TransformListener
 from std_msgs.msg import Float32MultiArray
 
 from capstone_interfaces.msg import TB3Status
+from capstone_interfaces.msg import TB3Link
 
 
 class tb3_status_node(Node):
@@ -47,9 +47,17 @@ class tb3_status_node(Node):
             Float32, "tmp_node", self.callback_tmp, qos_profile_sensor_data
         )
 
+        self.link_status = TB3Link()
+        self.link_sub = self.create_subscription(
+            TB3Link, "tb3_link", self.callback_link_sub, qos_profile_sensor_data
+        )
+
         self.tmp = 0
 
-        print("tb3_status_node has been started")
+        self.get_logger().info("tb3_status_node has been started")
+
+    def callback_link_sub(self, msg):
+        self.link_status = msg
 
     def on_listener_timer(self):
         from_frame = self.target_frame  # child
@@ -63,11 +71,10 @@ class tb3_status_node(Node):
             self.trans_x = trans.transform.translation.x
             self.trans_y = trans.transform.translation.y
         except:
-            print("cannot listen to transform")
+            self.get_logger().info("cannot listen to transform")
             return
 
     def callback_battery(self, msg):
-        # print("low battery: (%): {:.2f}".format(msg.percentage))
         self.battery = msg.percentage
 
     def callback_tmp(self, msg):
@@ -87,18 +94,20 @@ class tb3_status_node(Node):
         lidar_rear = {'225': lidar_arr[5],
                       '180': lidar_arr[6], '135': lidar_arr[7]}
 
-        print(lidar_front)
-        print(lidar_sides)
-        print(lidar_rear)
-        print("battery: {:.2f}".format(self.battery), "\ttemperature: {:.2f}".format(self.tmp))
-        print(f"parent: {self.parent_frame} \t\t child: {self.target_frame}")
+        # print out some information for troubleshooting purposes
+        logger = "\n" + str(lidar_front) + "\n" + str(lidar_sides) + "\n" + str(lidar_rear) \
+            + "\n" + "battery: {:.2f}".format(self.battery) + "\ttemperature: {:.2f}".format(self.tmp) \
+            + "\n" + f"parent: {self.parent_frame} \t\t child: {self.target_frame}"
+        
         
         if self.trans_x is None or self.trans_y is None:
-            print("listener not ready yet")
+            self.get_logger().info(logger + "\nlistener not ready yet" + "\n")
         else:
-            print("x: {:.2e}".format(self.trans_x), "\t\ty: {:.2e}".format(self.trans_y))
+            self.get_logger().info(logger + "\nx: {:.2e}".format(self.trans_x) +  "\t\ty: {:.2e}".format(self.trans_y) + "\n")
+
+        self.get_logger().info(str(self.link_status))
         
-        print()
+        # publish stuff as needed
         lidar_msg = TB3Status()
         lidar_msg.lidar_data = lidar_arr
         self.lidar_pub.publish(lidar_msg)
