@@ -24,7 +24,7 @@ root = os.path.abspath(os.path.join(path, "..", "..", ".."))
 save_maps = os.path.join(root, "maps")
 
 
-class RobotWordNode(Node):
+class RobotWorldNode(Node):
     def __init__(self):
         super().__init__("robot_world")
 
@@ -43,8 +43,8 @@ class RobotWordNode(Node):
         self.q = Quaternion()
 
         # will get a bool from circle_around node
-        self.robot_init_service = self.create_service(
-            SetBool, "robot_initialization", self.callback_service
+        self.robot_world_service_check = self.create_service(
+            SetBool, "robot_world_check", self.callback_service_check
         )
         self.robot_service_completed = False
 
@@ -64,25 +64,23 @@ class RobotWordNode(Node):
         self.publish_map_link = self.create_publisher(
             TB3Link, "tb3_link", 10
         )
-
         self.get_logger().info("robot world started")
 
-    def callback_service(self, request, response):
+    def callback_service_check(self, request, response):
         req = request.data
         if req:
             self.robot_service_completed = req
-            self.get_logger().info("robot initialization service completed")
             response.success = True
-            response.message = "got your message"
+            response.message = "node ready, client request completed for robot world"
             return response
         else:
             response.success = False
-            response.message = "something happened?"
+            response.message = "function sent False as request data"
             return response
 
     # get transforms - these frames will provide robot poses relative to map frame
     def on_timer(self):
-        self.get_logger().info(save_maps)
+
         from_frame = self.target_frame
         to_frame = 'map'
         try:
@@ -146,7 +144,10 @@ class RobotWordNode(Node):
             map_origin_xy[0], map_origin_xy[1], msg.info.width)
 
         # outputting to txt file is for troubleshooting
-        with open(save_maps + 'local_grid.txt', 'w') as output:
+        grid_file = "local_grid.txt"
+        grid_file_path = os.path.join(save_maps, grid_file)
+
+        with open(grid_file_path, 'w') as output:
             for i, grid in enumerate(msg.data, 1):
                 if i == robot_i:
                     output.write(" [r] ")
@@ -168,7 +169,9 @@ class RobotWordNode(Node):
                 if i % msg.info.width == 0 and i > 0:
                     output.write("\n")
 
-        with open(save_maps + 'local_map_arr.txt', 'w') as output:
+        map_arr_file = "local_map_arr.txt"
+        map_arr_file_path = os.path.join(save_maps, map_arr_file)
+        with open(map_arr_file_path, 'w') as output:
             for i, grid in enumerate(msg.data, 1):
                 output.write(str(grid))
                 if i != len(msg.data):
@@ -213,7 +216,7 @@ class RobotWordNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = RobotWordNode()
+    node = RobotWorldNode()
     rclpy.spin(node)
     rclpy.shutdown()
 

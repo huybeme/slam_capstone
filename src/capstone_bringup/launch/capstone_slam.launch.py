@@ -43,6 +43,13 @@ def generate_launch_description():
             name='robot_world'
         ),
 
+        Node(
+            package='capstone_pkg',
+            executable='scratch',
+            name='scratch'
+        ),
+
+
         # Node(
         #     package='cartographer_ros',
         #     executable='cartographer_node',

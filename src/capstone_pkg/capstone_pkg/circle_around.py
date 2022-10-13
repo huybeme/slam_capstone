@@ -8,6 +8,8 @@ import time
 from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.msg import TB3Link
 
+import capstone_pkg.capstone_function as capstone_function
+
 
 class circle_around_node(Node):
     def __init__(self):
@@ -15,7 +17,7 @@ class circle_around_node(Node):
 
         self.tb_status = TB3Status()
         self.get_lidar_val = self.create_subscription(
-            TB3Status, "tb3_lidar_values", self.callback_lidar_and_move, 10)
+            TB3Status, "tb3_status", self.callback_lidar_and_move, 10)
 
         self.movement = Twist()
         self.publish_movement = self.create_publisher(
@@ -26,21 +28,32 @@ class circle_around_node(Node):
         self.publish_robot_world_link = self.create_publisher(
             TB3Link, "tb3_link", 10
         )
-        self.pub_timer = self.create_timer(1, self.callback_pub_timer)
+
+        self.circle_service_check = self.create_service(
+            SetBool, "circle_around_check", self.callback_service_check
+        )
 
         self.state = 100
 
         self.get_logger().info("circling around node has begun")
-
-    def callback_pub_timer(self):
-        self.publish_robot_world_link.publish(self.robot_world_link)
+    
+    def callback_service_check(self, request, response):
+        req = request.data
+        if req:
+            self.robot_service_completed = req
+            response.success = True
+            response.message = "node ready, client request completed for circle around node"
+            return response
+        else:
+            response.success = False
+            response.message = "function sent False as request data"
+            return response
 
     def callback_lidar_and_move(self, msg):
         # 1m = 39.4 in      12 in = 0.3m    1in = 0.025m    0.1m = 3.9in
         # max linear = 0.22   max angular = 2.84
         # positive z = right
         # [2] 0.5 = [4] 0.3 apprx
-
         if self.state == 0:
             self.setup_initial_state(msg.lidar_data)
 
@@ -58,7 +71,8 @@ class circle_around_node(Node):
             self.stop_movement()
 
         if self.state == 100:
-            self.send_request()
+            # capstone_function.send_service_request(self, "robot_initialization")
+            # self.send_request()
             self.robot_world_link.circle_around_link = True
             self.state = 1
 
@@ -68,17 +82,23 @@ class circle_around_node(Node):
               "z: ", float("{:.3f}".format(self.movement.angular.z)))
 
         self.publish_movement.publish(self.movement)
+        self.publish_robot_world_link.publish(self.robot_world_link)
 
+    '''might not needed since we will put this in a module instead. will remove if I can figure out how
+    to get rid of the publisher reigstered node name warning.'''
     def send_request(self):
         client = self.create_client(SetBool, 'robot_initialization')
+
+        # send request is not asynchronous; node stuck in while loop with no other actions
         while not client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info("waiting for robot world to recieve request")
         req = SetBool.Request()
         req.data = True
 
         future = client.call_async(req)
+
         future.add_done_callback(
-            # data here will not be used...
+            # response not used as variable, only for troubleshooting as messages
             partial(self.call_send_service, data=False)
         )
         self.get_logger().info("robot world node recieved request")
@@ -86,6 +106,7 @@ class circle_around_node(Node):
     def call_send_service(self, future, data):
         try:
             response = future.result()
+            # "true" and "got your message"
             self.get_logger().info(str(response.success))
             self.get_logger().info(str(response.message))
         except:

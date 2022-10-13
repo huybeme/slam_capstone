@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             "stop_movement = capstone_pkg.stop_movement:main",
+            "scratch = capstone_pkg.scratch:main",
             
             "tb3_status = capstone_pkg.tb3_status:main",
             "circle_around = capstone_pkg.circle_around:main",
