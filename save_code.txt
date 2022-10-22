@@ -50,3 +50,42 @@
     #for i in range(len(msg.data) -1, -1, -1): enumerate array backwards
 
 #----------- start ------------------#
+
+
+
+
+
+
+
+
+
+
+    ####################################################
+    '''might not needed since we will put this in a module instead. will remove if I can figure out how
+    to get rid of the publisher reigstered node name warning.'''
+    def send_request(self):
+        client = self.create_client(SetBool, 'robot_initialization')
+
+        # send request is not asynchronous; node stuck in while loop with no other actions
+        while not client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info("waiting for robot world to recieve request")
+        req = SetBool.Request()
+        req.data = True
+
+        future = client.call_async(req)
+
+        future.add_done_callback(
+            # response not used as variable, only for troubleshooting as messages
+            partial(self.call_send_service, data=False)
+        )
+        self.get_logger().info("robot world node recieved request")
+
+    def call_send_service(self, future, data):
+        try:
+            response = future.result()
+            # "true" and "got your message"
+            self.get_logger().info(str(response.success))
+            self.get_logger().info(str(response.message))
+        except:
+            self.get_logger().info("service call failed")
+    ##########################################################

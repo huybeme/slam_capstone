@@ -9,6 +9,7 @@ from std_srvs.srv import SetBool
 import numpy as np
 
 from capstone_interfaces.msg import TB3Link
+from capstone_interfaces.msg import TB3Tracker
 from ament_index_python.packages import get_package_share_directory
 
 AREA = [
@@ -46,12 +47,19 @@ class RobotWorldNode(Node):
         self.robot_world_service_check = self.create_service(
             SetBool, "robot_world_check", self.callback_service_check
         )
-        self.robot_service_completed = False
+        self.robot_service_completed = False         # change this back to False
 
         self.start_found = False
         self.start_xy_pose = None
         self.start_xy_grid = None
         self.start_i = None
+
+        self.RT_map_pos_x = None
+        self.RT_map_pos_y = None
+
+        self.tracker_publisher = self.create_publisher(
+            TB3Tracker, "tb3_tracker", 10
+        )
 
         # should I track the robot as an area within a world rather than a point
         self.robot_area_pose = []
@@ -60,13 +68,10 @@ class RobotWorldNode(Node):
 
         self.state = 0
 
-        self.map_link = TB3Link()
-        self.publish_map_link = self.create_publisher(
-            TB3Link, "tb3_link", 10
-        )
         self.get_logger().info("robot world started")
 
     def callback_service_check(self, request, response):
+        # wait for robot to finish initialzation and then trigger to take robot cords
         req = request.data
         if req:
             self.robot_service_completed = req
@@ -83,6 +88,7 @@ class RobotWorldNode(Node):
 
         from_frame = self.target_frame
         to_frame = 'map'
+        # try to find map > odom transform
         try:
             now = self.get_clock().now().to_msg()
             # go back in time n sec to get last frame since current frame "will not exist"
@@ -92,11 +98,9 @@ class RobotWorldNode(Node):
                 from_frame,
                 now
             )
-            self.map_link.robot_world_link = True
+
         except:
-            self.map_link.robot_world_link = False
             return
-        self.publish_map_link.publish(self.map_link)
         self.vector = trans.transform.translation
         self.q = trans.transform.rotation
 
@@ -115,9 +119,9 @@ class RobotWorldNode(Node):
             self.start_found = True
             self.state = 1
 
-        # get the area of the initial pose as an array
-        start_area_grid = []
-        start_area_i = []
+        # get the area of the initial pose as an array and continually update
+        start_area_grid = []    # contains cordinates in grid
+        start_area_i = []       # contains indexes of the cordinates in the array
         if self.start_found:
             self.start_xy_grid = self.world_to_grid(
                 self.start_xy_pose[0], self.start_xy_pose[1], msg.info.origin.position.x,
@@ -136,6 +140,7 @@ class RobotWorldNode(Node):
         else:
             return
 
+        # these map locations are exactly when cartographer is launched
         map_origin_xy = self.world_to_grid(
             0.0, 0.0, msg.info.origin.position.x,
             msg.info.origin.position.y, msg.info.resolution, msg.info.width, msg.info.height
@@ -143,13 +148,20 @@ class RobotWorldNode(Node):
         map_origin_i = self.to_index(
             map_origin_xy[0], map_origin_xy[1], msg.info.width)
 
+        # print(map_origin_xy)            # 2d array coordinates of map
+        # print(msg.info.origin.position.x, msg.info.origin.position.y)   # grid coordinates of map
+        self.get_logger().info(str(self.start_xy_pose))
+        self.get_logger().info(str(self.vector.x) + ", " + str(self.vector.y))
+
         # outputting to txt file is for troubleshooting
         grid_file = "local_grid.txt"
         grid_file_path = os.path.join(save_maps, grid_file)
 
         with open(grid_file_path, 'w') as output:
             for i, grid in enumerate(msg.data, 1):
-                if i == robot_i:
+                if i == robot_i and i == map_origin_i:
+                    output.write(" [X] ")
+                elif i == robot_i:
                     output.write(" [r] ")
                 elif i == map_origin_i:
                     output.write(" [m] ")
@@ -186,6 +198,17 @@ class RobotWorldNode(Node):
             output.write("map_pose_x: " + str(msg.info.origin.position.x))      # do i need q?
             output.write("\n")
             output.write("map_pose_y: " + str(msg.info.origin.position.y))
+
+
+        tracker = TB3Tracker()
+        tracker.robot_i = robot_i
+        tracker.start_area_i = start_area_i
+        self.tracker_publisher.publish(tracker)
+
+        # if (robot_i in start_area_i):
+        #     self.get_logger().info("we made it back into the general vicinity")
+        # if (robot_i == map_origin_i):
+        #     self.get_logger().info("we made it to the exact original spot")
 
     # do i use this?
 

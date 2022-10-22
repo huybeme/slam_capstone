@@ -21,6 +21,7 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TB3Status.msg"
   "msg/TB3Link.msg"
+  "msg/TB3Tracker.msg"
   "action/Cartographer.action"
 )
 

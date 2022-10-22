@@ -6,7 +6,11 @@ from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.action import Cartographer
 import subprocess
 
-class scratch_node(Node):
+"""
+    client will send a server a request
+"""
+
+class TB3_MapClient(Node):
     def __init__(self):
         super().__init__("scratch_node")
 
@@ -59,7 +63,7 @@ class scratch_node(Node):
 def main(args=None):
 
     rclpy.init(args=args)
-    node = scratch_node()
+    node = TB3_MapClient()
     rclpy.spin(node)
     # rclpy.shutdown()  # cannot have shutdowns at multiple spots, will get error somehow
 

@@ -45,8 +45,8 @@ def generate_launch_description():
 
         Node(
             package='capstone_pkg',
-            executable='scratch',
-            name='scratch'
+            executable='tb3_map_server',
+            name='tb3_map_server'
         ),
 
 

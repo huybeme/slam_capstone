@@ -17,7 +17,10 @@ from capstone_interfaces.msg import TB3Link
 import capstone_pkg.capstone_function as capstone_function
 
 import os
+from tkinter import *
 
+
+TOLERANCE = 160
 
 class tb3_status_node(Node):
     def __init__(self):
@@ -52,28 +55,36 @@ class tb3_status_node(Node):
             Float32, "tmp_node", self.callback_tmp, qos_profile_sensor_data
         )
 
-        self.link_status = TB3Link()
-        self.link_sub = self.create_subscription(
-            TB3Link, "tb3_link", self.callback_link_sub, qos_profile_sensor_data
+        self.stop_pub = self.create_publisher(
+            Twist, "cmd_vel", 10
         )
 
         self.tmp = 0
 
-        self.node_status_check()
+        self.scratch_timer = self.create_timer(1, self.node_status_check)
+        self.scratch_state = 0
 
-        self.cartographer_ready = False
+        self.outside_tolerance = False
 
         self.get_logger().info("tb3_status_node has been started")
 
     def node_status_check(self):
-        circle_node = capstone_function.send_service_request(self, "circle_around_check", "circle_around")
-        self.get_logger().info(str(circle_node))
 
-        world_node = capstone_function.send_service_request(self, "robot_world_check", "robot_world")
-        self.get_logger().info(str(world_node))
+        if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
+            return
+        elif (abs(self.odom_bfp_tf_trans_x) > TOLERANCE or abs(self.odom_bfp_tf_trans_y) > TOLERANCE):
+            self.outside_tolerance = True
+        
+        if (abs(self.odom_bfp_tf_trans_x) < TOLERANCE or abs(self.odom_bfp_tf_trans_y) < TOLERANCE) and self.scratch_state == 0:
+            self.get_logger().info("client request to server for cartographer")
+            capstone_function.send_service_request(self, "map_server_check", "tb3_map_server")
+            self.scratch_state = -99
 
-    def callback_link_sub(self, msg):
-        self.link_status = msg
+        # circle_node = capstone_function.send_service_request(self, "circle_around_check", "circle_around")
+
+        # world_node = capstone_function.send_service_request(self, "robot_world_check", "robot_world")
+        # self.get_logger().info(str(self.odom_bfp_tf_trans_x))
+        # self.get_logger().info(str(self.odom_bfp_tf_trans_y))
 
     def on_tf_timer(self):
         trans = None
@@ -82,14 +93,9 @@ class tb3_status_node(Node):
             trans = self.tf_buffer.lookup_transform(
                 self.odom_str_parent, self.basefp_str_child, now
             )
-
+            # odom > basefootprint positions are the same as map > odom
             self.odom_bfp_tf_trans_x = trans.transform.translation.x
             self.odom_bfp_tf_trans_y = trans.transform.translation.y
-
-            # if abs(self.odom_bf_trans_x) <= 0.05 and abs(self.odom_bf_trans_y) <= 0.05 and not self.cartographer_ready:
-            #     self.cartographer_ready = True
-            #     # os.system("ros2 launch turtlebot3_cartographer cartographer.launch.py")
-            #     self.get_logger().info("robot position within resolution, cartographer package launched")
 
         except:
             self.get_logger().info("tf listeners not listening")
@@ -102,6 +108,13 @@ class tb3_status_node(Node):
         self.tmp = msg.data
 
     def callback_tb3_status(self, msg):
+
+        if self.outside_tolerance:
+            self.get_logger().info("transform outside tolerance, cartographer cannot open")
+            self.get_logger().info(str(self.odom_bfp_tf_trans_x) + ", " + str(self.odom_bfp_tf_trans_y))
+            self.stop_pub.publish(capstone_function.stop_movement())
+            return
+
         lidar_arr = [float("{:.3f}".format(msg.ranges[45])),    float("{:.3f}".format(msg.ranges[0])),      float("{:.3f}".format(msg.ranges[315])),
                      float("{:.3f}".format(msg.ranges[90])),                                                float(
                          "{:.3f}".format(msg.ranges[270])),
@@ -122,15 +135,15 @@ class tb3_status_node(Node):
             + "\n" + \
             f"parent:  {self.odom_str_parent}\t\t child: {self.basefp_str_child}"
 
-        if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
-            self.get_logger().info(logger + "\nlistener not ready yet" + "\n")
-        else:
-            status_msg.robot_pos_x = self.odom_bfp_tf_trans_x
-            status_msg.robot_pos_y = self.odom_bfp_tf_trans_y
-            self.get_logger().info(logger +
-                                   "\nx: {:.2e}".format(self.odom_bfp_tf_trans_x) + "\t\ty: {:.2e}".format(self.odom_bfp_tf_trans_y) + "\n")
-
-        self.get_logger().info(str(self.link_status))
+        # if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
+        #     self.get_logger().info(logger + "\nlistener not ready yet" + "\n")
+        # else:
+        #     status_msg.robot_pos_x = self.odom_bfp_tf_trans_x
+        #     status_msg.robot_pos_y = self.odom_bfp_tf_trans_y
+        #     self.get_logger().info(logger +
+        #                            "\nx: {:.2e}".format(self.odom_bfp_tf_trans_x) + "\t\ty: {:.2e}".format(self.odom_bfp_tf_trans_y))
+        #     if self.odom_bfp_tf_trans_x > TOLERANCE or self.odom_bfp_tf_trans_y > TOLERANCE:
+        #         self.get_logger().info("odom and basefootprint x and y position is above the carographer tolerance")
 
         # publish stuff as needed
         status_msg.lidar_data = lidar_arr

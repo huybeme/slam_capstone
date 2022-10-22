@@ -21,9 +21,4 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
-# install(PARENT_DIRECTORY
-#   src config
-#   DESTINATON share/${PROJECT_NAME}
-# )
-
 ament_package()

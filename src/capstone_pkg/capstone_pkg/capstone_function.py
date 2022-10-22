@@ -17,6 +17,7 @@ def send_service_request(node, name, node_name):
 
         future = client.call_async(req)
 
+        # this gives the warning of the double topic
         # future.add_done_callback(
         #     # response not used as variable, only for troubleshooting as messages
         #     partial(call_send_service)
@@ -37,3 +38,11 @@ def call_send_service(future):
         node.get_logger().info("service call completed")
     except:
         node.get_logger().info("service call failed")
+
+def stop_movement():
+    stop = geometry_msgs.msg.Twist()
+    stop.linear.x = 0.0
+    stop.linear.y = 0.0
+    stop.linear.z = 0.0
+
+    return stop
