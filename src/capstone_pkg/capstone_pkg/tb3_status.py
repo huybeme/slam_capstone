@@ -80,12 +80,6 @@ class tb3_status_node(Node):
             capstone_function.send_service_request(self, "map_server_check", "tb3_map_server")
             self.scratch_state = -99
 
-        # circle_node = capstone_function.send_service_request(self, "circle_around_check", "circle_around")
-
-        # world_node = capstone_function.send_service_request(self, "robot_world_check", "robot_world")
-        # self.get_logger().info(str(self.odom_bfp_tf_trans_x))
-        # self.get_logger().info(str(self.odom_bfp_tf_trans_y))
-
     def on_tf_timer(self):
         trans = None
         try:

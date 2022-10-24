@@ -150,8 +150,8 @@ class RobotWorldNode(Node):
 
         # print(map_origin_xy)            # 2d array coordinates of map
         # print(msg.info.origin.position.x, msg.info.origin.position.y)   # grid coordinates of map
-        self.get_logger().info(str(self.start_xy_pose))
-        self.get_logger().info(str(self.vector.x) + ", " + str(self.vector.y))
+        # self.get_logger().info(str(self.start_xy_pose))       # sometimes this variable is rounded to 0.0.... why
+        # self.get_logger().info(str(self.vector.x) + ", " + str(self.vector.y))
 
         # outputting to txt file is for troubleshooting
         grid_file = "local_grid.txt"
