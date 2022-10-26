@@ -83,10 +83,11 @@ class TB3MapServer(Node):
                 map_command = "ros2 run nav2_map_server map_saver_cli -f " + map_path
                 self.get_logger().info(str(map_command))
                 os.system(map_command)
-                # self.state = 2
+                self.state = 2
                 self.get_logger().info("Found original spot and saved map. Cartographer closing now")
                 self.launch_cartographer.send_signal(signal.SIGINT)
                 self.launch_cartographer.wait(timeout=10)
+
         # might want this as elif and part of a state machine
         elif self.robot_i not in self.start_area_i and not self.left_initial_spot:
             self.left_initial_spot = True # at this point, it will always be true and will not re-enter this condiditon
@@ -98,31 +99,6 @@ class TB3MapServer(Node):
         # cartographer_launch = subprocess.Popen(["ros2", "launch", cartographer_launch_file], text=True)
         # cartographer_launch.send_signal(signal.SIGINT)
         # cartographer_launch.wait(timeout=10)
-
-    # action serve approach no have been swapped to service client method. - delete
-    def map_action_callback(self, goal_handle):
-        self.get_logger().info("got a client request...")
-        
-        fb_msg = Cartographer.Feedback()
-        fb_msg.still_mapping = goal_handle.request.start_mapping
-        fb_msg.test_mapping = True
-
-        # for i in range(5):
-        #     self.get_logger().info(str(i +1))
-        #     time.sleep(1)
-
-        goal_handle.publish_feedback(fb_msg)
-
-        goal_handle.succeed()
-        
-        result = Cartographer.Result()
-        result.found_origin = True
-
-
-        self.get_logger().info(str(fb_msg))
-        self.get_logger().info(str(goal_handle))
-        self.get_logger().info(str(result))
-        return result
 
 def main(args=None):
     rclpy.init(args=args)

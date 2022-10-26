@@ -4,6 +4,7 @@ from rclpy.node import Node
 from std_srvs.srv import SetBool
 from geometry_msgs.msg import Twist
 import time
+import signal
 
 from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.msg import TB3Link
@@ -30,6 +31,8 @@ class circle_around_node(Node):
 
         self.state = 0
 
+        
+        signal.signal(signal.SIGINT, self.user_stop_movement)
         self.get_logger().info("circling around node has begun")
     
     def callback_service_check(self, request, response):
@@ -122,6 +125,12 @@ class circle_around_node(Node):
         self.movement.linear.x = 0.0
         self.publish_movement.publish(self.movement)
         # should I wait a few seconds here?
+
+    def user_stop_movement(self, signal_received, frame):
+        self.stop_movement()
+        self.state = -99
+        self.get_logger().info("user stoped circle around movement")
+        exit(0)
 
     def cube_root(self, x):
         ''' prevent real number output done by python, this helps prevent output of real number
