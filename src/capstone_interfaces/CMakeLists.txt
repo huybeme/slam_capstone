@@ -17,12 +17,16 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 # added to generate new interfaces through project
+find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TB3Status.msg"
   "msg/TB3Link.msg"
   "msg/TB3Tracker.msg"
   "action/Cartographer.action"
+  "srv/State.srv"
+
+  DEPENDENCIES builtin_interfaces geometry_msgs
 )
 
 ament_package()

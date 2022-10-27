@@ -1,10 +1,10 @@
-from concurrent.futures import process
 import rclpy
 import os
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
 from tf2_ros import TransformListener, Buffer
-from geometry_msgs.msg import Vector3, Quaternion
+import tf_transformations
+from geometry_msgs.msg import Vector3, Quaternion, TransformStamped, PoseStamped
 from std_srvs.srv import SetBool
 import numpy as np
 
@@ -42,6 +42,7 @@ class RobotWorldNode(Node):
 
         self.vector = Vector3()
         self.q = Quaternion()
+        self.robot_transform = TransformStamped()
 
         # will get a bool from circle_around node
         self.robot_world_service_check = self.create_service(
@@ -86,10 +87,11 @@ class RobotWorldNode(Node):
     # get transforms - these frames will provide robot poses relative to map frame
     def on_timer(self):
 
-        from_frame = self.target_frame
-        to_frame = 'map'
         # try to find map > odom transform
         try:
+            from_frame = self.target_frame
+            to_frame = 'map'
+
             now = self.get_clock().now().to_msg()
             # go back in time n sec to get last frame since current frame "will not exist"
             now.nanosec = now.nanosec - 200000000
@@ -98,11 +100,18 @@ class RobotWorldNode(Node):
                 from_frame,
                 now
             )
+            
+            self.vector = trans.transform.translation
+            self.q = trans.transform.rotation
+
+            # self.get_logger().info(str(trans.transform.translation))
+            # self.get_logger().info(str(trans.transform.rotation))
+
+            self.robot_transform = trans
 
         except:
             return
-        self.vector = trans.transform.translation
-        self.q = trans.transform.rotation
+
 
     def get_grid(self, msg):
 
@@ -203,6 +212,7 @@ class RobotWorldNode(Node):
         tracker = TB3Tracker()
         tracker.robot_i = robot_i
         tracker.start_area_i = start_area_i
+        tracker.robot_transform = self.robot_transform
         self.tracker_publisher.publish(tracker)
 
         # if (robot_i in start_area_i):

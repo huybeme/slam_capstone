@@ -95,6 +95,8 @@ class tb3_status_node(Node):
             self.get_logger().info("tf listeners not listening")
             return
 
+        # self.get_logger().info(str(trans))
+
     def callback_battery(self, msg):
         self.battery = msg.percentage
 

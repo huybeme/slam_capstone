@@ -8,6 +8,8 @@ from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.msg import TB3Tracker
 from capstone_interfaces.action import Cartographer
 
+import capstone_pkg.capstone_function as capstone_function
+
 import time
 import subprocess
 import os
@@ -15,6 +17,7 @@ import signal
 
 # TODO: fix this so its not hard coded
 cartographer_launch_file = "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_cartographer/launch/cartographer.launch.py"
+navigation_launch_file = "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py"
 
 path = os.path.dirname(__file__)
 root = os.path.abspath(os.path.join(path, "..", "..", ".."))
@@ -31,6 +34,7 @@ class TB3MapServer(Node):
         self.start_area_i = None
 
         self.launch_cartographer = None
+        self.launch_navigation = None
 
         self.state = 0
         self.left_initial_spot = False
@@ -58,7 +62,7 @@ class TB3MapServer(Node):
             return response
 
     def callback_tracker(self, msg):
-        # self.get_logger().info("\n\n\n")
+        # self.get_logger().info(str(msg.robot_transform.transform))
 
         if self.launch_cartographer is None:
             self.get_logger().info("cartographer package not yet launched")
@@ -67,7 +71,7 @@ class TB3MapServer(Node):
         if len(msg.start_area_i) > 0:
             self.robot_i = msg.robot_i
             self.start_area_i = msg.start_area_i
-            self.get_logger().info("tracker data recieved and tracking robot location")
+            # self.get_logger().info("tracker data recieved and tracking robot location")
         else:
             self.get_logger().info("tracker data not yet recieved")
             return
@@ -77,16 +81,31 @@ class TB3MapServer(Node):
                 self.get_logger().info("still have not left initial area")
                 return
             elif self.state == 1:
+
+                # create unique map name and save
                 timestamp = time.time_ns()
                 map_name = "rviz2_map_" + str(timestamp)
                 map_path = os.path.join(save_maps, map_name)
                 map_command = "ros2 run nav2_map_server map_saver_cli -f " + map_path
-                self.get_logger().info(str(map_command))
-                os.system(map_command)
-                self.state = 2
+                # os.system(map_command)
+
+                # change state and shutdown cartographer
                 self.get_logger().info("Found original spot and saved map. Cartographer closing now")
-                self.launch_cartographer.send_signal(signal.SIGINT)
-                self.launch_cartographer.wait(timeout=10)
+                # self.launch_cartographer.send_signal(signal.SIGINT)
+                # self.launch_cartographer.wait(timeout=10)
+
+                self.get_logger().info("launching navigation now")
+                nav_args = "map:=" + map_path + ".yaml"
+                self.launch_navigation = subprocess.Popen(["ros2", "launch", "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py",
+                "map:=/home/hle/Desktop/compsci/ros/slam_capstone/maps/rviz2_map_1666906890637391581.yaml"], text=True)
+
+                # self.launch_navigation.send_signal(signal.SIGINT)
+                # self.launch_cartographer.wait(timeout=10)
+
+                capstone_function.send_service_request(self, "robot_movement_state", "circle_around", 99)
+                self.get_logger().info("closing navigation now")
+
+                self.state = 2
 
         # might want this as elif and part of a state machine
         elif self.robot_i not in self.start_area_i and not self.left_initial_spot:
@@ -94,11 +113,8 @@ class TB3MapServer(Node):
             self.state = 1
             self.get_logger().info("left original spot")
         else:
+            return
             self.get_logger().info("error, state is: " + str(self.state))
-
-        # cartographer_launch = subprocess.Popen(["ros2", "launch", cartographer_launch_file], text=True)
-        # cartographer_launch.send_signal(signal.SIGINT)
-        # cartographer_launch.wait(timeout=10)
 
 def main(args=None):
     rclpy.init(args=args)

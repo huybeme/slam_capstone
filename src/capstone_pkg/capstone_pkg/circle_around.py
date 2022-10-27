@@ -8,6 +8,7 @@ import signal
 
 from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.msg import TB3Link
+from capstone_interfaces.srv import State
 
 import capstone_pkg.capstone_function as capstone_function
 
@@ -26,7 +27,7 @@ class circle_around_node(Node):
         )
 
         self.circle_service_check = self.create_service(
-            SetBool, "circle_around_check", self.callback_service_check
+            State, "robot_movement_state", self.callback_movement_state
         )
 
         self.state = 0
@@ -35,16 +36,14 @@ class circle_around_node(Node):
         signal.signal(signal.SIGINT, self.user_stop_movement)
         self.get_logger().info("circling around node has begun")
     
-    def callback_service_check(self, request, response):
-        req = request.data
-        if req:
-            self.robot_service_completed = req
+    def callback_movement_state(self, request, response):
+        req = request.state
+        if type(req) is int:
+            self.state = req
             response.success = True
-            response.message = "node ready, client request completed for circle around node"
             return response
         else:
             response.success = False
-            response.message = "function sent False as request data"
             return response
 
     def callback_lidar_and_move(self, msg):
