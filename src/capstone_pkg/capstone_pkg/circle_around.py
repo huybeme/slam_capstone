@@ -57,6 +57,11 @@ class circle_around_node(Node):
         if self.state == 1:
             self.move_along_wall(msg.lidar_data)
 
+        if self.state == 2: 
+            self.stop_movement()
+            self.state = -99
+            exit(0)
+
         if self.state == 99:
             self.stop_movement()
 

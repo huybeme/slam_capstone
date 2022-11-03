@@ -45,6 +45,8 @@ class TB3MapServer(Node):
 
         self.get_logger().info("TB3 map server node started")
 
+    
+
     def callback_service_check(self, request, response):
         self.get_logger().info("waiting for a client...")
         req = request.data
@@ -102,7 +104,7 @@ class TB3MapServer(Node):
                 # self.launch_navigation.send_signal(signal.SIGINT)
                 # self.launch_cartographer.wait(timeout=10)
 
-                capstone_function.send_service_request(self, "robot_movement_state", "circle_around", 99)
+                capstone_function.send_service_request(self, "robot_movement_state", "circle_around", 2)
                 self.get_logger().info("closing navigation now")
 
                 self.state = 2

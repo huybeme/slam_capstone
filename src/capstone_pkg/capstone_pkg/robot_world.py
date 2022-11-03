@@ -1,15 +1,16 @@
+from functools import partial
 import rclpy
 import os
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
 from tf2_ros import TransformListener, Buffer
-import tf_transformations
-from geometry_msgs.msg import Vector3, Quaternion, TransformStamped, PoseStamped
+from geometry_msgs.msg import Vector3, Quaternion, TransformStamped
 from std_srvs.srv import SetBool
 import numpy as np
+from std_msgs.msg import Float32
 
-from capstone_interfaces.msg import TB3Link
 from capstone_interfaces.msg import TB3Tracker
+from capstone_interfaces.srv import Temperature
 from ament_index_python.packages import get_package_share_directory
 
 AREA = [
@@ -22,7 +23,7 @@ AREA = [
 
 path = os.path.dirname(__file__)
 root = os.path.abspath(os.path.join(path, "..", "..", ".."))
-save_maps = os.path.join(root, "maps")
+map_path = os.path.join(root, "maps")
 
 
 class RobotWorldNode(Node):
@@ -55,14 +56,15 @@ class RobotWorldNode(Node):
         self.start_xy_grid = None
         self.start_i = None
 
-        self.RT_map_pos_x = None
-        self.RT_map_pos_y = None
-
         self.tracker_publisher = self.create_publisher(
             TB3Tracker, "tb3_tracker", 10
         )
 
-        # should I track the robot as an area within a world rather than a point
+        self.current_tempF = 0.0
+        self.max_tempF = None
+        self.temp_logger = []       # might need to handle how large this gets
+
+        # should I track the robot as an area within a world rather than a point - no ----- delete
         self.robot_area_pose = []
         self.robot_area_grid = []
         self.robot_area_i = []
@@ -164,7 +166,7 @@ class RobotWorldNode(Node):
 
         # outputting to txt file is for troubleshooting
         grid_file = "local_grid.txt"
-        grid_file_path = os.path.join(save_maps, grid_file)
+        grid_file_path = os.path.join(map_path, grid_file)
 
         with open(grid_file_path, 'w') as output:
             for i, grid in enumerate(msg.data, 1):
@@ -190,9 +192,9 @@ class RobotWorldNode(Node):
                 if i % msg.info.width == 0 and i > 0:
                     output.write("\n")
 
-        map_arr_file = "local_map_arr.txt"
-        map_arr_file_path = os.path.join(save_maps, map_arr_file)
-        with open(map_arr_file_path, 'w') as output:
+        grid_arr_file = "temp_arr.txt"
+        grid_arr_file_path = os.path.join(map_path, grid_arr_file)
+        with open(grid_arr_file_path, 'w') as output:
             for i, grid in enumerate(msg.data, 1):
                 output.write(str(grid))
                 if i != len(msg.data):
@@ -215,21 +217,25 @@ class RobotWorldNode(Node):
         tracker.robot_transform = self.robot_transform
         self.tracker_publisher.publish(tracker)
 
-        # if (robot_i in start_area_i):
-        #     self.get_logger().info("we made it back into the general vicinity")
-        # if (robot_i == map_origin_i):
-        #     self.get_logger().info("we made it to the exact original spot")
+
+        self.request_temp()     # can we get this returned instead?
+        if self.max_tempF is None or self.max_tempF < self.current_tempF:
+            self.get_logger().info("current max temp: " + str(self.max_tempF))
+            self.get_logger().info("got new max temp: " + str(self.current_tempF))
+            self.max_tempF = self.current_tempF
+            self.temp_logger.append((self.max_tempF, self.vector.x, self.vector.y))
+
 
     # do i use this?
 
-    def update_start(self, xy, resolution, origin_x, origin_y):
-        gx = xy[0]
-        gy = xy[1]
+    # def update_start(self, xy, resolution, origin_x, origin_y):
+    #     gx = xy[0]
+    #     gy = xy[1]
 
-        x = gx * resolution + origin_x
-        y = gy * resolution + origin_y
+    #     x = gx * resolution + origin_x
+    #     y = gy * resolution + origin_y
 
-        return [x, y]
+    #     return [x, y]
 
     def to_index(self, x, y, width):
         return (y * width + x)
@@ -245,6 +251,28 @@ class RobotWorldNode(Node):
 
         # print(x, y, gx, gy)
         return [gx, gy]
+
+    def request_temp(self):
+        client = self.create_client(Temperature, "temperature_service")
+
+        while not client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info("waiting for temperature server to respond")
+        
+        req = Temperature.Request()
+        # self.get_logger().info(str(req))
+
+        future = client.call_async(req)
+
+        future.add_done_callback(
+            partial(self.call_send_service)
+        )
+
+    def call_send_service(self, future):
+        try:
+            response = future.result()
+            self.current_tempF = response.temperature
+        except:
+            return
 
 
 def main(args=None):

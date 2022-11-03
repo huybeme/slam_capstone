@@ -25,6 +25,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TB3Tracker.msg"
   "action/Cartographer.action"
   "srv/State.srv"
+  "srv/Temperature.srv"
 
   DEPENDENCIES builtin_interfaces geometry_msgs
 )

@@ -1,23 +1,18 @@
 import rclpy
-# need this buffer for lidar sensor
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import qos_profile_sensor_data # need this buffer for lidar sensor
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import BatteryState
-from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32
 
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
-from std_msgs.msg import Float32MultiArray
 
 from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.msg import TB3Link
+from capstone_interfaces.srv import Temperature
 import capstone_pkg.capstone_function as capstone_function
-
-import os
-from tkinter import *
 
 
 TOLERANCE = 160
@@ -64,9 +59,18 @@ class tb3_status_node(Node):
         self.scratch_timer = self.create_timer(1, self.node_status_check)
         self.scratch_state = 0
 
+        self.send_temperature_service = self.create_service(
+            Temperature, "temperature_service", self.callback_temperature
+        )
+
         self.outside_tolerance = False
 
         self.get_logger().info("tb3_status_node has been started")
+
+    def callback_temperature(self, request, response):
+        # no request variables set in Temperature.srv
+        response.temperature = self.tmp
+        return response
 
     def node_status_check(self):
 
