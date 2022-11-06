@@ -85,7 +85,8 @@ class TB3MapServer(Node):
                 map_path = os.path.join(save_maps, map_name)
                 map_command = "ros2 run nav2_map_server map_saver_cli -f " + map_path
 
-                # os.system(map_command)    # uncomment this before real demo!!!!!!!!!!!!!!!!!!!!!!!!!1
+                # uncomment this before real demo!!!!!!!!!!!!!!!!!!!!!!!!!1
+                os.system(map_command)
 
                 # change state and shutdown cartographer
                 self.get_logger().info("Found original spot and saved map. Cartographer closing now")
@@ -108,6 +109,10 @@ class TB3MapServer(Node):
                 capstone_function.send_service_request(
                     self, "robot_movement_state", "circle_around", -99)
                 self.get_logger().info("closing navigation now")
+
+                capstone_function.send_service_request(
+                    self, "robot_world_temp", "robot_world"
+                )
 
                 self.state = 2
 

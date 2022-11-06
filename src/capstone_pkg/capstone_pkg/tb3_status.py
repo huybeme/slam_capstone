@@ -13,9 +13,9 @@ from tf2_ros.transform_listener import TransformListener
 from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.srv import Temperature
 import capstone_pkg.capstone_function as capstone_function
+import math
 
-
-TOLERANCE = 160
+TOLERANCE = 160 #math.pow(10, 200) #160
 
 
 class tb3_status_node(Node):
@@ -111,6 +111,7 @@ class tb3_status_node(Node):
             self.get_logger().info("transform outside tolerance, cartographer will not be launched")
             self.get_logger().info(str(self.odom_bfp_tf_trans_x) +
                                    ", " + str(self.odom_bfp_tf_trans_y))
+            self.get_logger().info("battery: " + "{:.2f}".format(self.battery))
             self.stop_pub.publish(capstone_function.stop_movement())
             return
 
@@ -134,15 +135,15 @@ class tb3_status_node(Node):
             + "\n" + \
             f"parent:  {self.odom_str_parent}\t\t child: {self.basefp_str_child}"
 
-        if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
-            self.get_logger().info(logger + "\nlistener not ready yet" + "\n")
-        else:
+        # if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
+        #     self.get_logger().info(logger + "\nlistener not ready yet" + "\n")
+        # else:
 
-            self.get_logger().info(logger +
-                                   "\nx: {:.2e}".format(self.odom_bfp_tf_trans_x) + "\t\ty: {:.2e}".format(self.odom_bfp_tf_trans_y))
-            if self.odom_bfp_tf_trans_x > TOLERANCE or self.odom_bfp_tf_trans_y > TOLERANCE:
-                self.get_logger().info(
-                    "odom and basefootprint x and y position is above the carographer tolerance")
+        #     self.get_logger().info(logger +
+        #                            "\nx: {:.2e}".format(self.odom_bfp_tf_trans_x) + "\t\ty: {:.2e}".format(self.odom_bfp_tf_trans_y))
+        #     if self.odom_bfp_tf_trans_x > TOLERANCE or self.odom_bfp_tf_trans_y > TOLERANCE:
+        #         self.get_logger().info(
+        #             "odom and basefootprint x and y position is above the carographer tolerance")
 
         # publish stuff as needed
         status_msg.lidar_data = lidar_arr

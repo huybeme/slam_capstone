@@ -32,7 +32,7 @@ def send_service_request(node, name, node_name, state=None):
         except:
             return False
 
-    elif state >= 0:
+    elif isinstance(state, int):
         try:
             client = node.create_client(capstone_interfaces.srv.State, name)
             

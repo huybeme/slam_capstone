@@ -47,7 +47,7 @@ class RobotWorldNode(Node):
         self.robot_world_service_check = self.create_service(
             SetBool, "robot_world_check", self.callback_service_check
         )
-        self.robot_service_completed = False         # change this back to False
+        self.robot_service_completed = False
 
         self.start_found = False
         self.start_xy_pose = None
@@ -58,6 +58,12 @@ class RobotWorldNode(Node):
             TB3Tracker, "tb3_tracker", 10
         )
 
+        self.find_hotspot_service = self.create_service(
+            SetBool, "robot_world_temp", self.callback_hotspot_service
+        )
+
+        self.find_hot_spot = False
+
         self.current_tempF = 0.0
         self.max_tempF = None
         self.temp_logger = []       # might need to handle how large this gets
@@ -66,17 +72,30 @@ class RobotWorldNode(Node):
 
         self.get_logger().info("robot world started")
 
+    def callback_hotspot_service(self, request, response):
+        req = request.data
+        self.get_logger().info("hot spot")
+        if req:
+            self.find_hot_spot = req
+            response.success = True
+            response.message = "robot_world ready to send robot to hotspot"
+            return response
+        else:
+            response.success = False
+            response.message = "robot_world did not send robot to hotspot"
+            return response
+
     def callback_service_check(self, request, response):
         # wait for robot to finish initialzation and then trigger to take robot cords
         req = request.data
         if req:
             self.robot_service_completed = req
             response.success = True
-            response.message = "node ready, client request completed for robot world"
+            response.message = "robot localization initiated for robot_world"
             return response
         else:
             response.success = False
-            response.message = "function sent False as request data"
+            response.message = "robot localization not initiated for robot_world"
             return response
 
     # get transforms - these frames will provide robot poses relative to map frame
@@ -157,12 +176,34 @@ class RobotWorldNode(Node):
         grid_file = "local_grid.txt"
         grid_file_path = os.path.join(map_path, grid_file)
 
+        temp_file = "temp_grid.txt"
+        temp_file_path = os.path.join(map_path, temp_file)
+        temp_file_f = open(temp_file_path, "w")
+
+
+        # this text file can be used to build OccupancyGrid data. can be used to publish latest map data
+        # not really used at this point
+        grid_arr_file = "temp_arr.txt"
+        grid_arr_file_path = os.path.join(map_path, grid_arr_file)
+        grid_arr_f = open(grid_arr_file_path, "w")
+
         with open(grid_file_path, 'w') as output:
             for i, grid in enumerate(msg.data, 1):
+
+                if i == robot_i:
+                    temp_file_f.write("[" + "{:.2f}".format(self.current_tempF) + "]")
+                else:
+                    temp_file_f.write("[xx.xx]")
+
+                grid_arr_f.write(str(grid))
+                if i != len(msg.data):
+                    grid_arr_f.write(",")
+
                 if i == robot_i and i == map_origin_i:
                     output.write(" [X] ")
                 elif i == robot_i:
                     output.write(" [r] ")
+                    
                 elif i == map_origin_i:
                     output.write(" [m] ")
                 elif (i in start_area_i):
@@ -180,25 +221,22 @@ class RobotWorldNode(Node):
 
                 if i % msg.info.width == 0 and i > 0:
                     output.write("\n")
+                    temp_file_f.write("\n")
 
-        grid_arr_file = "temp_arr.txt"
-        grid_arr_file_path = os.path.join(map_path, grid_arr_file)
-        with open(grid_arr_file_path, 'w') as output:
-            for i, grid in enumerate(msg.data, 1):
-                output.write(str(grid))
-                if i != len(msg.data):
-                    output.write(",")
-            output.write("\n")
-            output.write("map_width: " + str(msg.info.width))
-            output.write("\n")
-            output.write("map_height: " + str(msg.info.height))
-            output.write("\n")
-            output.write("map_resolution: " + str(msg.info.resolution))
-            output.write("\n")
+            grid_arr_f.write("\n")
+            grid_arr_f.write("map_width: " + str(msg.info.width))
+            grid_arr_f.write("\n")
+            grid_arr_f.write("map_height: " + str(msg.info.height))
+            grid_arr_f.write("\n")
+            grid_arr_f.write("map_resolution: " + str(msg.info.resolution))
+            grid_arr_f.write("\n")
             # do i need q?
-            output.write("map_pose_x: " + str(msg.info.origin.position.x))
-            output.write("\n")
-            output.write("map_pose_y: " + str(msg.info.origin.position.y))
+            grid_arr_f.write("map_pose_x: " + str(msg.info.origin.position.x))
+            grid_arr_f.write("\n")
+            grid_arr_f.write("map_pose_y: " + str(msg.info.origin.position.y))
+
+        temp_file_f.close()
+        grid_arr_f.close()
 
         tracker = TB3Tracker()
         tracker.robot_i = robot_i
@@ -206,13 +244,29 @@ class RobotWorldNode(Node):
         tracker.robot_transform = self.robot_transform
         self.tracker_publisher.publish(tracker)
 
-        self.request_temp()     # can we get this returned instead?
+        self.request_temp()     # should we get this returned instead?
         if self.max_tempF is None or self.max_tempF < self.current_tempF:
             self.get_logger().info("current max temp: " + str(self.max_tempF))
             self.get_logger().info("got new max temp: " + str(self.current_tempF))
             self.max_tempF = self.current_tempF
             self.temp_logger.append(
                 (self.max_tempF, self.vector.x, self.vector.y))
+        
+
+        # average sensor when running the robot temp for a while is ~80 F
+        if self.find_hot_spot:
+            hotspot = 0.0
+            hotspot_i = -99
+            for i, temp in enumerate(self.temp_logger):
+                if temp[0] > hotspot:
+                    hotspot = temp[0]
+                    hotspot_i = i
+            
+            self.get_logger().info(str(hotspot))
+            self.get_logger().info(str(hotspot_i))
+            self.get_logger().info(str(self.temp_logger[hotspot_i]))
+            self.find_hot_spot = False
+
 
     def to_index(self, x, y, width):
         return (y * width + x)

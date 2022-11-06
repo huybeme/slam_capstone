@@ -35,6 +35,8 @@ class circle_around_node(Node):
 
     def callback_movement_state(self, request, response):
         req = request.state
+
+        self.get_logger().info("callback")
         if type(req) is int:
             self.state = req
             response.success = True
@@ -61,28 +63,41 @@ class circle_around_node(Node):
         if self.state == -99:
             self.stop_movement()
             self.state = -100
+            self.get_logger().info("client request stopping")
             exit(0)
 
         self.publish_movement.publish(self.movement)
 
     def move_along_wall(self, lidar):
         # may get stuck in concave that is just bigger than robot
-        self.movement.linear.x = 0.1
-        print("moving along wall")
+        # self.movement.linear.x = 0.1
 
         # hit a wall
         if lidar[1] < 0.38 and lidar[1] > 0.01:
+            self.movement.linear.x = 0.1
+
             self.make_turn(1)
 
         # align to wall
-        elif lidar[4] > 0.003 and lidar[4] <= 1.0:
+        elif lidar[4] > 0.003 and lidar[4] <= 0.75:
+            self.movement.linear.x = 0.1
+            
+            # negative x turns it right
             x = (lidar[2] - 0.4) * 1.5
             x = self.cube_root(x)
             self.movement.angular.z = -x  # -0.357 * lidar[4] + 0.15
-            print(1, self.three_decimals(x), lidar[4])
+            # self.get_logger().info("aligning")
+            # self.get_logger().info(str(x))
+
+        elif lidar[4] > 0.75:
+            self.movement.linear.x = 0.050
+            self.movement.angular.z = -1.0
+            self.get_logger().info("aligning2")
 
         else:
+            self.movement.linear.x = 0.1
             self.movement.angular.z = 0.0
+            # self.get_logger().info("no turn")
 
     def setup_initial_state(self, lidar):
 
