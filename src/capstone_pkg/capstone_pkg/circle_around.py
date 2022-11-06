@@ -1,13 +1,10 @@
-from functools import partial
 import rclpy
 from rclpy.node import Node
-from std_srvs.srv import SetBool
 from geometry_msgs.msg import Twist
 import time
 import signal
 
 from capstone_interfaces.msg import TB3Status
-from capstone_interfaces.msg import TB3Link
 from capstone_interfaces.srv import State
 
 import capstone_pkg.capstone_function as capstone_function
@@ -32,10 +29,10 @@ class circle_around_node(Node):
 
         self.state = 0
 
-        
+        # if user stopped program with ctrl + C, will initiate this function
         signal.signal(signal.SIGINT, self.user_stop_movement)
         self.get_logger().info("circling around node has begun")
-    
+
     def callback_movement_state(self, request, response):
         req = request.state
         if type(req) is int:
@@ -47,33 +44,24 @@ class circle_around_node(Node):
             return response
 
     def callback_lidar_and_move(self, msg):
-        # 1m = 39.4 in      12 in = 0.3m    1in = 0.025m    0.1m = 3.9in
-        # max linear = 0.22   max angular = 2.84
-        # positive z = right
-        # [2] 0.5 = [4] 0.3 apprx
+
         if self.state == 0:
             self.setup_initial_state(msg.lidar_data)
 
         if self.state == 1:
+            # does not print until request is completed - will also be stuck here if no response is recieved
+            print(capstone_function.send_service_request(
+                self, "robot_world_check", "robot_world"))
+            self.state = 2
+
+        if self.state == 2:
             self.move_along_wall(msg.lidar_data)
 
-        if self.state == 2: 
+        # this state will be reached through tb3_map_server node by service requests
+        if self.state == -99:
             self.stop_movement()
-            self.state = -99
+            self.state = -100
             exit(0)
-
-        if self.state == 99:
-            self.stop_movement()
-
-        if self.state == 100:
-            # does not print until request is completed
-            print(capstone_function.send_service_request(self, "robot_world_check", "robot_world"))
-            self.state = 1
-
-        print("movement\n",
-              "state: ", self.state,
-              "\nx: ", float("{:.3f}".format(self.movement.linear.x)),
-              "z: ", float("{:.3f}".format(self.movement.angular.z)))
 
         self.publish_movement.publish(self.movement)
 
@@ -101,12 +89,12 @@ class circle_around_node(Node):
         if lidar[1] < 0.4 and lidar[1] > 0.01:    # too close to wall
             self.movement.linear.x = -0.05
             if lidar[1] > 0.39:
-                self.state = 100
+                self.state = 1
                 self.stop_movement()
 
         elif lidar[1] > 0.39:
             if lidar[1] < 0.4:
-                self.state = 100
+                self.state = 1
                 self.stop_movement()
             speed = 0.22 - ((-0.229 * lidar[1]) + 0.229)
             if speed > 0.22:

@@ -7,11 +7,9 @@ from tf2_ros import TransformListener, Buffer
 from geometry_msgs.msg import Vector3, Quaternion, TransformStamped
 from std_srvs.srv import SetBool
 import numpy as np
-from std_msgs.msg import Float32
 
 from capstone_interfaces.msg import TB3Tracker
 from capstone_interfaces.srv import Temperature
-from ament_index_python.packages import get_package_share_directory
 
 AREA = [
     [-1, 2], [0, 2], [1, 2],
@@ -64,11 +62,6 @@ class RobotWorldNode(Node):
         self.max_tempF = None
         self.temp_logger = []       # might need to handle how large this gets
 
-        # should I track the robot as an area within a world rather than a point - no ----- delete
-        self.robot_area_pose = []
-        self.robot_area_grid = []
-        self.robot_area_i = []
-
         self.state = 0
 
         self.get_logger().info("robot world started")
@@ -102,18 +95,14 @@ class RobotWorldNode(Node):
                 from_frame,
                 now
             )
-            
+
             self.vector = trans.transform.translation
             self.q = trans.transform.rotation
-
-            # self.get_logger().info(str(trans.transform.translation))
-            # self.get_logger().info(str(trans.transform.rotation))
 
             self.robot_transform = trans
 
         except:
             return
-
 
     def get_grid(self, msg):
 
@@ -206,10 +195,10 @@ class RobotWorldNode(Node):
             output.write("\n")
             output.write("map_resolution: " + str(msg.info.resolution))
             output.write("\n")
-            output.write("map_pose_x: " + str(msg.info.origin.position.x))      # do i need q?
+            # do i need q?
+            output.write("map_pose_x: " + str(msg.info.origin.position.x))
             output.write("\n")
             output.write("map_pose_y: " + str(msg.info.origin.position.y))
-
 
         tracker = TB3Tracker()
         tracker.robot_i = robot_i
@@ -217,25 +206,13 @@ class RobotWorldNode(Node):
         tracker.robot_transform = self.robot_transform
         self.tracker_publisher.publish(tracker)
 
-
         self.request_temp()     # can we get this returned instead?
         if self.max_tempF is None or self.max_tempF < self.current_tempF:
             self.get_logger().info("current max temp: " + str(self.max_tempF))
             self.get_logger().info("got new max temp: " + str(self.current_tempF))
             self.max_tempF = self.current_tempF
-            self.temp_logger.append((self.max_tempF, self.vector.x, self.vector.y))
-
-
-    # do i use this?
-
-    # def update_start(self, xy, resolution, origin_x, origin_y):
-    #     gx = xy[0]
-    #     gy = xy[1]
-
-    #     x = gx * resolution + origin_x
-    #     y = gy * resolution + origin_y
-
-    #     return [x, y]
+            self.temp_logger.append(
+                (self.max_tempF, self.vector.x, self.vector.y))
 
     def to_index(self, x, y, width):
         return (y * width + x)
@@ -249,7 +226,6 @@ class RobotWorldNode(Node):
         gx = int((x - origin_x) / resolution)
         gy = int((y - origin_y) / resolution)
 
-        # print(x, y, gx, gy)
         return [gx, gy]
 
     def request_temp(self):
@@ -257,9 +233,8 @@ class RobotWorldNode(Node):
 
         while not client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info("waiting for temperature server to respond")
-        
+
         req = Temperature.Request()
-        # self.get_logger().info(str(req))
 
         future = client.call_async(req)
 

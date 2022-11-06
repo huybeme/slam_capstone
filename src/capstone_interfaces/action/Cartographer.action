@@ -1,9 +1,0 @@
-# Request
-bool start_mapping
----
-# Result
-bool found_origin
----
-# Feedback
-bool still_mapping
-bool test_mapping

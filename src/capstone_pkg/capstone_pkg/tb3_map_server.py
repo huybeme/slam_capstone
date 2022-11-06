@@ -1,12 +1,9 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.action import ActionServer
 from rclpy.executors import MultiThreadedExecutor
 
 from std_srvs.srv import SetBool
-from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.msg import TB3Tracker
-from capstone_interfaces.action import Cartographer
 
 import capstone_pkg.capstone_function as capstone_function
 
@@ -22,6 +19,7 @@ navigation_launch_file = "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navi
 path = os.path.dirname(__file__)
 root = os.path.abspath(os.path.join(path, "..", "..", ".."))
 save_maps = os.path.join(root, "maps")
+
 
 class TB3MapServer(Node):
     def __init__(self):
@@ -45,8 +43,6 @@ class TB3MapServer(Node):
 
         self.get_logger().info("TB3 map server node started")
 
-    
-
     def callback_service_check(self, request, response):
         self.get_logger().info("waiting for a client...")
         req = request.data
@@ -56,7 +52,8 @@ class TB3MapServer(Node):
             response.message = "node ready, client request completed for robot world node"
 
             self.get_logger().info("launching cartographer now")
-            self.launch_cartographer = subprocess.Popen(["ros2", "launch", cartographer_launch_file], text=True)
+            self.launch_cartographer = subprocess.Popen(
+                ["ros2", "launch", cartographer_launch_file], text=True)
             return response
         else:
             response.success = False
@@ -64,16 +61,14 @@ class TB3MapServer(Node):
             return response
 
     def callback_tracker(self, msg):
-        # self.get_logger().info(str(msg.robot_transform.transform))
 
         if self.launch_cartographer is None:
             self.get_logger().info("cartographer package not yet launched")
             return
-        
+
         if len(msg.start_area_i) > 0:
             self.robot_i = msg.robot_i
             self.start_area_i = msg.start_area_i
-            # self.get_logger().info("tracker data recieved and tracking robot location")
         else:
             self.get_logger().info("tracker data not yet recieved")
             return
@@ -89,7 +84,8 @@ class TB3MapServer(Node):
                 map_name = "rviz2_map_" + str(timestamp)
                 map_path = os.path.join(save_maps, map_name)
                 map_command = "ros2 run nav2_map_server map_saver_cli -f " + map_path
-                # os.system(map_command)
+
+                # os.system(map_command)    # uncomment this before real demo!!!!!!!!!!!!!!!!!!!!!!!!!1
 
                 # change state and shutdown cartographer
                 self.get_logger().info("Found original spot and saved map. Cartographer closing now")
@@ -98,25 +94,29 @@ class TB3MapServer(Node):
 
                 self.get_logger().info("launching navigation now")
                 nav_args = "map:=" + map_path + ".yaml"
-                self.launch_navigation = subprocess.Popen(["ros2", "launch", "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py",
-                "map:=/home/hle/Desktop/compsci/ros/slam_capstone/maps/rviz2_map_1666906890637391581.yaml"], text=True)
+                self.launch_navigation = subprocess.Popen(["ros2", "launch", navigation_launch_file,
+                                                           nav_args], text=True)
 
+                # self.launch_navigation = subprocess.Popen(["ros2", "launch", "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py",
+                # "map:=/home/hle/Desktop/compsci/ros/slam_capstone/maps/rviz2_map_1666906890637391581.yaml"], text=True)
+
+                # closing subprocess will not allow another subprocess to open using these functions
                 # self.launch_navigation.send_signal(signal.SIGINT)
                 # self.launch_cartographer.wait(timeout=10)
 
-                capstone_function.send_service_request(self, "robot_movement_state", "circle_around", 2)
+                # change state for circle_around node to close
+                capstone_function.send_service_request(
+                    self, "robot_movement_state", "circle_around", -99)
                 self.get_logger().info("closing navigation now")
 
                 self.state = 2
 
-        # might want this as elif and part of a state machine
         elif self.robot_i not in self.start_area_i and not self.left_initial_spot:
-            self.left_initial_spot = True # at this point, it will always be true and will not re-enter this condiditon
+            # at this point, it will always be true and will not re-enter this condiditon
+            self.left_initial_spot = True
             self.state = 1
             self.get_logger().info("left original spot")
-        else:
-            return
-            self.get_logger().info("error, state is: " + str(self.state))
+
 
 def main(args=None):
     rclpy.init(args=args)
@@ -127,7 +127,6 @@ def main(args=None):
         executor = MultiThreadedExecutor(num_threads=4)
         executor.add_node(server)
         # executor.add_node(subie)
-
 
         try:
             executor.spin()

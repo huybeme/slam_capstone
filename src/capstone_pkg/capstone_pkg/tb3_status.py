@@ -1,5 +1,6 @@
 import rclpy
-from rclpy.qos import qos_profile_sensor_data # need this buffer for lidar sensor
+# need this buffer for lidar sensor
+from rclpy.qos import qos_profile_sensor_data
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import BatteryState
@@ -10,12 +11,12 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 
 from capstone_interfaces.msg import TB3Status
-from capstone_interfaces.msg import TB3Link
 from capstone_interfaces.srv import Temperature
 import capstone_pkg.capstone_function as capstone_function
 
 
 TOLERANCE = 160
+
 
 class tb3_status_node(Node):
     def __init__(self):
@@ -54,14 +55,14 @@ class tb3_status_node(Node):
             Twist, "cmd_vel", 10
         )
 
-        self.tmp = 0
-
-        self.scratch_timer = self.create_timer(1, self.node_status_check)
-        self.scratch_state = 0
+        self.check_timer = self.create_timer(1, self.node_status_check)
+        self.check_state = 0
 
         self.send_temperature_service = self.create_service(
             Temperature, "temperature_service", self.callback_temperature
         )
+
+        self.tmp = 0
 
         self.outside_tolerance = False
 
@@ -74,15 +75,20 @@ class tb3_status_node(Node):
 
     def node_status_check(self):
 
+        # if the transforms haven't started listening yet, do not proceed
         if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
             return
+
+        # if odom frame is outside tolerance, flag so callback method does not proceed
         elif (abs(self.odom_bfp_tf_trans_x) > TOLERANCE or abs(self.odom_bfp_tf_trans_y) > TOLERANCE):
             self.outside_tolerance = True
-        
-        if (abs(self.odom_bfp_tf_trans_x) < TOLERANCE or abs(self.odom_bfp_tf_trans_y) < TOLERANCE) and self.scratch_state == 0:
+
+        # if within tolerance, let tb3_map_server node to launch cartographer for map topic
+        if (abs(self.odom_bfp_tf_trans_x) < TOLERANCE or abs(self.odom_bfp_tf_trans_y) < TOLERANCE) and self.check_state == 0:
             self.get_logger().info("client request to server for cartographer")
-            capstone_function.send_service_request(self, "map_server_check", "tb3_map_server")
-            self.scratch_state = -99
+            capstone_function.send_service_request(
+                self, "map_server_check", "tb3_map_server")
+            self.check_state = -99
 
     def on_tf_timer(self):
         trans = None
@@ -99,19 +105,12 @@ class tb3_status_node(Node):
             self.get_logger().info("tf listeners not listening")
             return
 
-        # self.get_logger().info(str(trans))
-
-    def callback_battery(self, msg):
-        self.battery = msg.percentage
-
-    def callback_tmp(self, msg):
-        self.tmp = msg.data
-
     def callback_tb3_status(self, msg):
 
         if self.outside_tolerance:
-            self.get_logger().info("transform outside tolerance, cartographer cannot open")
-            self.get_logger().info(str(self.odom_bfp_tf_trans_x) + ", " + str(self.odom_bfp_tf_trans_y))
+            self.get_logger().info("transform outside tolerance, cartographer will not be launched")
+            self.get_logger().info(str(self.odom_bfp_tf_trans_x) +
+                                   ", " + str(self.odom_bfp_tf_trans_y))
             self.stop_pub.publish(capstone_function.stop_movement())
             return
 
@@ -135,19 +134,25 @@ class tb3_status_node(Node):
             + "\n" + \
             f"parent:  {self.odom_str_parent}\t\t child: {self.basefp_str_child}"
 
-        # if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
-        #     self.get_logger().info(logger + "\nlistener not ready yet" + "\n")
-        # else:
-        #     status_msg.robot_pos_x = self.odom_bfp_tf_trans_x
-        #     status_msg.robot_pos_y = self.odom_bfp_tf_trans_y
-        #     self.get_logger().info(logger +
-        #                            "\nx: {:.2e}".format(self.odom_bfp_tf_trans_x) + "\t\ty: {:.2e}".format(self.odom_bfp_tf_trans_y))
-        #     if self.odom_bfp_tf_trans_x > TOLERANCE or self.odom_bfp_tf_trans_y > TOLERANCE:
-        #         self.get_logger().info("odom and basefootprint x and y position is above the carographer tolerance")
+        if self.odom_bfp_tf_trans_x is None or self.odom_bfp_tf_trans_y is None:
+            self.get_logger().info(logger + "\nlistener not ready yet" + "\n")
+        else:
+
+            self.get_logger().info(logger +
+                                   "\nx: {:.2e}".format(self.odom_bfp_tf_trans_x) + "\t\ty: {:.2e}".format(self.odom_bfp_tf_trans_y))
+            if self.odom_bfp_tf_trans_x > TOLERANCE or self.odom_bfp_tf_trans_y > TOLERANCE:
+                self.get_logger().info(
+                    "odom and basefootprint x and y position is above the carographer tolerance")
 
         # publish stuff as needed
         status_msg.lidar_data = lidar_arr
         self.tb3_status_pub.publish(status_msg)
+
+    def callback_battery(self, msg):
+        self.battery = msg.percentage
+
+    def callback_tmp(self, msg):
+        self.tmp = msg.data
 
 
 def main(args=None):
