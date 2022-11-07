@@ -12,9 +12,16 @@ import subprocess
 import os
 import signal
 
+from ament_index_python.packages import get_package_share_directory
+
 # TODO: fix this so its not hard coded
-cartographer_launch_file = "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_cartographer/launch/cartographer.launch.py"
-navigation_launch_file = "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py"
+cartographer_launch_file = os.path.join(get_package_share_directory('turtlebot3_cartographer'),
+                                        'launch', 'cartographer.launch.py')
+# "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_cartographer/launch/cartographer.launch.py"
+
+navigation_launch_file = os.path.join(get_package_share_directory('turtlebot3_navigation2'),
+                                      'launch', 'navigation2.launch.py')
+# "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py"
 
 path = os.path.dirname(__file__)
 root = os.path.abspath(os.path.join(path, "..", "..", ".."))
