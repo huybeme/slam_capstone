@@ -70,7 +70,6 @@ class circle_around_node(Node):
 
     def move_along_wall(self, lidar):
         # may get stuck in concave that is just bigger than robot
-        # self.movement.linear.x = 0.1
 
         # hit a wall
         if lidar[1] < 0.38 and lidar[1] > 0.01:
@@ -85,9 +84,7 @@ class circle_around_node(Node):
             # negative x turns it right
             x = (lidar[2] - 0.4) * 1.5
             x = self.cube_root(x)
-            self.movement.angular.z = -x  # -0.357 * lidar[4] + 0.15
-            # self.get_logger().info("aligning")
-            # self.get_logger().info(str(x))
+            self.movement.angular.z = -x
 
         elif lidar[4] > 0.75:
             self.movement.linear.x = 0.050

@@ -1,13 +1,13 @@
-from functools import partial
 import rclpy
-import os
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
 from tf2_ros import TransformListener, Buffer
 from geometry_msgs.msg import Vector3, Quaternion, TransformStamped
 from std_srvs.srv import SetBool
+
+from functools import partial
+import os
 import numpy as np
-import subprocess
 import time
 
 from capstone_interfaces.msg import TB3Tracker
@@ -253,7 +253,7 @@ class RobotWorldNode(Node):
             self.temp_logger.append(
                 (self.max_tempF, self.vector.x, self.vector.y))
 
-        # average sensor when running the robot temp for a while is ~80 F
+        # rpi will run ~80 F
         if self.find_hot_spot:
             hotspot = 0.0
             hotspot_i = -99
@@ -271,7 +271,6 @@ class RobotWorldNode(Node):
                         f"pose: {{position: {{x: {self.temp_logger[hotspot_i][1]}, y: {self.temp_logger[hotspot_i][2]}, z: 0.0}}, orientation: {{w: 1.0}}}}}}\""
 
             time.sleep(10)
-            # subprocess.Popen([target], text=True)
             os.system(target)
             self.get_logger().info(target)
             self.find_hot_spot = False

@@ -13,9 +13,8 @@ from tf2_ros.transform_listener import TransformListener
 from capstone_interfaces.msg import TB3Status
 from capstone_interfaces.srv import Temperature
 import capstone_pkg.capstone_function as capstone_function
-import math
 
-TOLERANCE = 160 #math.pow(10, 200) #160
+TOLERANCE = 160
 
 
 class tb3_status_node(Node):

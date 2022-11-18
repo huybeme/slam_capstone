@@ -1,16 +1,13 @@
 import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
-
 from std_srvs.srv import SetBool
 from capstone_interfaces.msg import TB3Tracker
-
 import capstone_pkg.capstone_function as capstone_function
 
 import time
 import subprocess
 import os
-import signal
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -91,28 +88,20 @@ class TB3MapServer(Node):
 
                 os.system(map_command)
 
-                # change state and shutdown cartographer
-                self.get_logger().info("Found original spot and saved map. Cartographer closing now")
-                # self.launch_cartographer.send_signal(signal.SIGINT)
-                # self.launch_cartographer.wait(timeout=10)
+                # closing subprocess will not allow another subprocess to open using these functions
+                # do not shutdown cartographer subprocess
+                self.get_logger().info("Found original spot and saved map and launching navigation now")
 
-                self.get_logger().info("launching navigation now")
                 nav_args = "map:=" + map_path + ".yaml"
                 self.launch_navigation = subprocess.Popen(["ros2", "launch", navigation_launch_file,
                                                            nav_args], text=True)
-
-                # self.launch_navigation = subprocess.Popen(["ros2", "launch", "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py",
-                # "map:=/home/hle/Desktop/compsci/ros/slam_capstone/maps/rviz2_map_1667777521674654856.yaml"], text=True)
-
-                # closing subprocess will not allow another subprocess to open using these functions
-                # self.launch_navigation.send_signal(signal.SIGINT)
-                # self.launch_cartographer.wait(timeout=10)
 
                 # change state for circle_around node to close
                 capstone_function.send_service_request(
                     self, "robot_movement_state", "circle_around", -99)
                 self.get_logger().info("closing navigation now")
 
+                # tell robot world we are now ready to go to hotspot
                 capstone_function.send_service_request(
                     self, "robot_world_temp", "robot_world"
                 )
@@ -130,17 +119,14 @@ def main(args=None):
     rclpy.init(args=args)
 
     try:
-        # subie = TB3_MapSubscriber()
         server = TB3MapServer()
         executor = MultiThreadedExecutor(num_threads=4)
         executor.add_node(server)
-        # executor.add_node(subie)
 
         try:
             executor.spin()
         finally:
             executor.shutdown()
-            # subie.destroy_node()
             server.destroy_node()
     finally:
 
