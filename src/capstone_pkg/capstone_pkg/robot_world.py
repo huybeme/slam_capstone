@@ -7,6 +7,8 @@ from tf2_ros import TransformListener, Buffer
 from geometry_msgs.msg import Vector3, Quaternion, TransformStamped
 from std_srvs.srv import SetBool
 import numpy as np
+import subprocess
+import time
 
 from capstone_interfaces.msg import TB3Tracker
 from capstone_interfaces.srv import Temperature
@@ -180,7 +182,6 @@ class RobotWorldNode(Node):
         temp_file_path = os.path.join(map_path, temp_file)
         temp_file_f = open(temp_file_path, "w")
 
-
         # this text file can be used to build OccupancyGrid data. can be used to publish latest map data
         # not really used at this point
         grid_arr_file = "temp_arr.txt"
@@ -191,7 +192,8 @@ class RobotWorldNode(Node):
             for i, grid in enumerate(msg.data, 1):
 
                 if i == robot_i:
-                    temp_file_f.write("[" + "{:.2f}".format(self.current_tempF) + "]")
+                    temp_file_f.write(
+                        "[" + "{:.2f}".format(self.current_tempF) + "]")
                 else:
                     temp_file_f.write("[xx.xx]")
 
@@ -203,7 +205,7 @@ class RobotWorldNode(Node):
                     output.write(" [X] ")
                 elif i == robot_i:
                     output.write(" [r] ")
-                    
+
                 elif i == map_origin_i:
                     output.write(" [m] ")
                 elif (i in start_area_i):
@@ -246,12 +248,10 @@ class RobotWorldNode(Node):
 
         self.request_temp()     # should we get this returned instead?
         if self.max_tempF is None or self.max_tempF < self.current_tempF:
-            self.get_logger().info("current max temp: " + str(self.max_tempF))
             self.get_logger().info("got new max temp: " + str(self.current_tempF))
             self.max_tempF = self.current_tempF
             self.temp_logger.append(
                 (self.max_tempF, self.vector.x, self.vector.y))
-        
 
         # average sensor when running the robot temp for a while is ~80 F
         if self.find_hot_spot:
@@ -261,12 +261,20 @@ class RobotWorldNode(Node):
                 if temp[0] > hotspot:
                     hotspot = temp[0]
                     hotspot_i = i
-            
+
             self.get_logger().info(str(hotspot))
             self.get_logger().info(str(hotspot_i))
             self.get_logger().info(str(self.temp_logger[hotspot_i]))
-            self.find_hot_spot = False
 
+            # use an extra { as an escape character for using { as a string
+            target =    f"ros2 topic pub -1 /goal_pose geometry_msgs/PoseStamped \"{{header: {{stamp: {{sec: 0}}, frame_id: 'map'}}, " \
+                        f"pose: {{position: {{x: {self.temp_logger[hotspot_i][1]}, y: {self.temp_logger[hotspot_i][2]}, z: 0.0}}, orientation: {{w: 1.0}}}}}}\""
+
+            time.sleep(10)
+            # subprocess.Popen([target], text=True)
+            os.system(target)
+            self.get_logger().info(target)
+            self.find_hot_spot = False
 
     def to_index(self, x, y, width):
         return (y * width + x)

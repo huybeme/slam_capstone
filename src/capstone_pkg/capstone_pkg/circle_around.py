@@ -92,7 +92,6 @@ class circle_around_node(Node):
         elif lidar[4] > 0.75:
             self.movement.linear.x = 0.050
             self.movement.angular.z = -1.0
-            self.get_logger().info("aligning2")
 
         else:
             self.movement.linear.x = 0.1

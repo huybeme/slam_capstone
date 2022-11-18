@@ -14,14 +14,11 @@ import signal
 
 from ament_index_python.packages import get_package_share_directory
 
-# TODO: fix this so its not hard coded
 cartographer_launch_file = os.path.join(get_package_share_directory('turtlebot3_cartographer'),
                                         'launch', 'cartographer.launch.py')
-# "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_cartographer/launch/cartographer.launch.py"
 
 navigation_launch_file = os.path.join(get_package_share_directory('turtlebot3_navigation2'),
                                       'launch', 'navigation2.launch.py')
-# "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py"
 
 path = os.path.dirname(__file__)
 root = os.path.abspath(os.path.join(path, "..", "..", ".."))
@@ -92,7 +89,6 @@ class TB3MapServer(Node):
                 map_path = os.path.join(save_maps, map_name)
                 map_command = "ros2 run nav2_map_server map_saver_cli -f " + map_path
 
-                # uncomment this before real demo!!!!!!!!!!!!!!!!!!!!!!!!!1
                 os.system(map_command)
 
                 # change state and shutdown cartographer
@@ -106,7 +102,7 @@ class TB3MapServer(Node):
                                                            nav_args], text=True)
 
                 # self.launch_navigation = subprocess.Popen(["ros2", "launch", "/home/hle/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/launch/navigation2.launch.py",
-                # "map:=/home/hle/Desktop/compsci/ros/slam_capstone/maps/rviz2_map_1666906890637391581.yaml"], text=True)
+                # "map:=/home/hle/Desktop/compsci/ros/slam_capstone/maps/rviz2_map_1667777521674654856.yaml"], text=True)
 
                 # closing subprocess will not allow another subprocess to open using these functions
                 # self.launch_navigation.send_signal(signal.SIGINT)
